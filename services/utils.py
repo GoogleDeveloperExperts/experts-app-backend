@@ -13,6 +13,7 @@ from datetime import datetime
 from datetime import date
 from google.appengine.api import app_identity
 from google.appengine.api import mail
+from google.appengine.api import urlfetch
 from apiclient.discovery import build
 
 from models import ActivityPost
@@ -77,18 +78,64 @@ def get_server_api_key():
     return secrets.get('server_api_key')
 
 
+def _getUserId():
+    """A workaround implementation for getting userid."""
+
+    auth = os.getenv('HTTP_AUTHORIZATION')
+    bearer, token = auth.split()
+    token_type = 'id_token'
+    if 'OAUTH_USER_ID' in os.environ:
+        token_type = 'access_token'
+    url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?%s=%s'
+           % (token_type, token))
+    user = {}
+    wait = 1
+    for i in range(3):
+        resp = urlfetch.fetch(url)
+        if resp.status_code == 200:
+            user = json.loads(resp.content)
+            break
+        elif resp.status_code == 400 and 'invalid_token' in resp.content:
+            url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?%s=%s'
+                   % ('access_token', token))
+        else:
+            time.sleep(wait)
+            wait = wait + i
+    return user.get('user_id', '')
+
+
 def get_current_account():
+    """Retrieve the Account entity associated with the current user."""
+
     user = endpoints.get_current_user()
     if user is None:
         return None
 
-    logging.debug('Authenticated user: %s' % user.email().lower())
+    email = user.email().lower()
 
-    accounts = Account.query(Account.email == user.email().lower()).fetch(1)
-    if len(accounts) == 0:
-        return None
+    # Try latest recorded auth_email first
+    accounts = Account.query(Account.auth_email == email).fetch(1)
+    if len(accounts) > 0:
+        return accounts[0]
 
-    return accounts[0]
+    # Try the user's default email next
+    accounts = Account.query(Account.email == email).fetch(1)
+    if len(accounts) > 0:
+        # Store auth email for next time
+        accounts[0].auth_email = email
+        accounts[0].put()
+        return accounts[0]
+
+    # Try via the user's Google ID
+    user_id = _getUserId()
+    accounts = Account.query(Account.gplus_id == user_id).fetch(1)
+    if len(accounts) > 0:
+        # Store auth email for next time
+        accounts[0].auth_email = email
+        accounts[0].put()
+        return accounts[0]
+
+    return None
 
 
 def check_auth(gplus_id, api_key):

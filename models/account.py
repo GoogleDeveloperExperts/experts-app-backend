@@ -25,6 +25,7 @@ class Account(EndpointsModel):
     display_name = ndb.StringProperty()
     real_name = ndb.StringProperty()
     email = ndb.StringProperty()
+    auth_email = ndb.StringProperty()
     location = ndb.StringProperty()
     region = ndb.StringProperty()
     country = ndb.StringProperty()
