@@ -38,6 +38,7 @@ from apiclient.discovery import build
 from models import ActivityPost
 from models import ActivityRecord
 from models import ActivityMetaData
+from models import ProductGroup
 from models import Account
 from models import activity_record as ar
 
@@ -61,6 +62,10 @@ class CronNewGplus(webapp2.RequestHandler):
             # don't process inactive users
             if account.type != "active":
                 continue
+            # uncomment this for testing against Patrick's account
+            if account.gplus_id != "117346385807218227082":
+                continue
+
             user_count += 1
             taskqueue.add(queue_name='gplus',
                           url='/tasks/new_gplus',
@@ -116,7 +121,7 @@ class TaskNewGplus(webapp2.RequestHandler):
             for gplus_activity in gplus_activities:
                 if gplus_activity["updated"] > last_activity_date:
                     # ensure this is a gde post
-                    if is_gde_post(gplus_activity):
+                    if is_gde_post(gplus_activity) and is_valid_post(gplus_activity):
 
                         # create a new activity
                         new_activity = ActivityPost(id=gplus_activity["id"])
@@ -156,7 +161,8 @@ def is_gde_post(activity):
     content = activity['object']['content']
     if 'annotation' in activity:
         content += ' ' + activity['annotation']
-    result = re.search('(#(gde</a>))', content, flags=re.IGNORECASE)
+    # result = re.search('(#(gde</a>))', content, flags=re.IGNORECASE)
+    result = is_valid_expert_tag(content)
     if result is None:
         return False
     # find out wether the verb of the post is 'post'
@@ -173,6 +179,32 @@ def is_gde_post(activity):
             return True
         else:
             return False
+    else:
+        return True
+
+
+def is_valid_expert_tag(content):
+    result = re.search('(#(gde</a>))', content, flags=re.IGNORECASE)
+    if result is not None:
+        return True
+    result = re.search('(#(experts</a>))', content, flags=re.IGNORECASE)
+    if result is not None:
+        return True
+    return False
+
+
+def is_valid_post(activity):
+    """Identify the product area."""
+    content = activity['object']['content']
+    if 'annotation' in activity:
+        content += ' ' + activity['annotation']
+    pg = []
+    for product_group in ProductGroup.all_tags():
+        result = re.search(product_group, content, flags=re.IGNORECASE)
+        if result is not None:
+            pg.append(product_group)
+    if not pg:
+        return False
     else:
         return True
 
@@ -252,6 +284,10 @@ class CronUpdateGplus(webapp2.RequestHandler):
             # don't process inactive users
             if account.type != "active":
                 continue
+            # uncomment this for testing against Patrick's account
+            if account.gplus_id != "117346385807218227082":
+                continue
+
             user_count += 1
             taskqueue.add(queue_name='gplus',
                           url='/tasks/upd_gplus',

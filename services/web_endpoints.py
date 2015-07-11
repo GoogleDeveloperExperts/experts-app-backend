@@ -15,11 +15,12 @@ from .utils import check_auth
 _CLIENT_IDs = [
     endpoints.API_EXPLORER_CLIENT_ID,
     '47242318878-dik3r14d8jc528h1ao35f8ehqa7tmpe1.apps.googleusercontent.com',
-    '622745668355-rpeo1i7hjo4vj003dithtp1d71iniqqc.apps.googleusercontent.com'
+    '622745668355-rpeo1i7hjo4vj003dithtp1d71iniqqc.apps.googleusercontent.com',
+    '66416776373-3k5goi8hn9d5rih68t8km57iliithohb.apps.googleusercontent.com'
 ]
 
 api_root = endpoints.api(
-    name='gdetracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
+    name='expertstracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
 
 
 @api_root.api_class(resource_name='activity_record', path='activityRecord')
@@ -263,7 +264,7 @@ class ActivityGroupService(remote.Service):
 class ProductGroupService(remote.Service):
 
     @ProductGroup.method(path='/productGroup/{id}', http_method='POST', name='insert',
-                         request_fields=('id', 'tag', 'description', 'url', 'image', 'api_key', 'so_tags'))
+                         request_fields=('id', 'tag', 'description', 'category', 'product', 'url', 'image', 'api_key', 'so_tags'))
     def pg_insert(self, product_group):
         if not check_auth(None, product_group.api_key):
             raise endpoints.UnauthorizedException(
