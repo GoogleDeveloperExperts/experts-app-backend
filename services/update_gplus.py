@@ -162,8 +162,7 @@ def is_gde_post(activity):
     if 'annotation' in activity:
         content += ' ' + activity['annotation']
     # result = re.search('(#(gde</a>))', content, flags=re.IGNORECASE)
-    result = is_valid_expert_tag(content)
-    if result is None:
+    if not is_valid_expert_tag(content):
         return False
     # find out wether the verb of the post is 'post'
     # alternatively is the verb is 'share' then verify that
@@ -198,15 +197,12 @@ def is_valid_post(activity):
     content = activity['object']['content']
     if 'annotation' in activity:
         content += ' ' + activity['annotation']
-    pg = []
     for product_group in ProductGroup.all_tags():
         result = re.search(product_group, content, flags=re.IGNORECASE)
         if result is not None:
-            pg.append(product_group)
-    if not pg:
-        return False
-    else:
-        return True
+            return True
+
+    return False
 
 
 def is_youtube_video(link):
