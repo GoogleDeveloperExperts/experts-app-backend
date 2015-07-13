@@ -7,7 +7,7 @@ from protorpc import messages
 class ProductGroup(EndpointsModel):
 
     _message_fields_schema = (
-        'id', 'tag', 'description', 'url', 'image', 'so_tags')
+        'id', 'tag', 'description', 'category', 'product', 'url', 'image', 'so_tags')
 
     _api_key = None
 
@@ -25,6 +25,12 @@ class ProductGroup(EndpointsModel):
 
     # Stack Overflow tags of interest  : issue #211 on github
     so_tags = ndb.StringProperty(repeated=True)
+
+    # Product Group Category is introduced to bring in non gde experts
+    category = ndb.StringProperty()
+
+    # Product is introduced to bring in classification and non gde experts
+    product = ndb.StringProperty()
 
     def ApiKeySet(self, value):
         self._api_key = value
