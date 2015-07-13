@@ -20,7 +20,8 @@ _CLIENT_IDs = [
 ]
 
 api_root = endpoints.api(
-    name='expertstracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
+    name='gdetracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
+# name='expertstracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
 
 
 @api_root.api_class(resource_name='activity_record', path='activityRecord')

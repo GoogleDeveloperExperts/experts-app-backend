@@ -63,8 +63,8 @@ class CronNewGplus(webapp2.RequestHandler):
             if account.type != "active":
                 continue
             # uncomment this for testing against Patrick's account
-            if account.gplus_id != "117346385807218227082":
-                continue
+            # if account.gplus_id != "117346385807218227082":
+            #     continue
 
             user_count += 1
             taskqueue.add(queue_name='gplus',
@@ -281,8 +281,8 @@ class CronUpdateGplus(webapp2.RequestHandler):
             if account.type != "active":
                 continue
             # uncomment this for testing against Patrick's account
-            if account.gplus_id != "117346385807218227082":
-                continue
+            # if account.gplus_id != "117346385807218227082":
+            #     continue
 
             user_count += 1
             taskqueue.add(queue_name='gplus',
