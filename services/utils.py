@@ -22,6 +22,9 @@ from models import Account
 from models import activity_record as ar
 
 
+# NON VALID ACCOUNT TYPES (FOR HARVESTING) : ['deleted', 'administrator']
+VALID_ACCOUNT_TYPES = ['active', 'gde', 'marketing', 'productstategy', 'ux_ui']
+
 my_default_retry_params = gcs.RetryParams(initial_delay=0.2,
                                           max_delay=5.0,
                                           backoff_factor=2,

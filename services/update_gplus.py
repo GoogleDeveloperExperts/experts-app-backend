@@ -43,6 +43,7 @@ from models import Account
 from models import activity_record as ar
 
 from .utils import get_server_api_key
+from .utils import VALID_ACCOUNT_TYPES
 
 
 class CronNewGplus(webapp2.RequestHandler):
@@ -56,11 +57,8 @@ class CronNewGplus(webapp2.RequestHandler):
         accounts = Account.query()
         user_count = 0
         for account in accounts:
-            # don't process admin users
-            if account.type == "administrator":
-                continue
-            # don't process inactive users
-            if account.type != "active":
+            # only process valid account types
+            if account.type not in VALID_ACCOUNT_TYPES:
                 continue
             # uncomment this for testing against Patrick's account
             # if account.gplus_id != "117346385807218227082":
@@ -274,11 +272,8 @@ class CronUpdateGplus(webapp2.RequestHandler):
         accounts = Account.query()
         user_count = 0
         for account in accounts:
-            # don't process admin users
-            if account.type == "administrator":
-                continue
-            # don't process inactive users
-            if account.type != "active":
+            # only process valid account types
+            if account.type not in VALID_ACCOUNT_TYPES:
                 continue
             # uncomment this for testing against Patrick's account
             # if account.gplus_id != "117346385807218227082":

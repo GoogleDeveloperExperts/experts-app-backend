@@ -61,6 +61,8 @@ from models import ProductGroup
 from models import activity_record as ar
 
 from .utils import get_so_api_key
+from .utils import VALID_ACCOUNT_TYPES
+
 
 SO_ROOT = "https://api.stackexchange.com/2.2"
 SO_KEY = get_so_api_key()
@@ -90,13 +92,11 @@ class CronHarvestSO(webapp2.RequestHandler):
         accounts = Account.query(Account.so_id != None)
         user_count = 0
         for account in accounts:
-            # don't process admin users
-            if account.type == "administrator":
+            # only process valid account types
+            if account.type not in VALID_ACCOUNT_TYPES:
                 continue
-            # don't process inactive users
-            if account.type != "active":
-                continue
-            # if account.gplus_id != "117200475532672775346":
+            # uncomment this for testing against Patrick's account
+            # if account.gplus_id != "117346385807218227082":
             #     continue
 
             user_count += 1
