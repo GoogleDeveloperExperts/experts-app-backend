@@ -103,7 +103,7 @@ class CronHarvestSO(webapp2.RequestHandler):
 
             for i in range(0, num_months):
                 start = start_date + monthdelta(i)
-                end = start + monthdelta(1) - timedelta(1)
+                end = start + monthdelta(1)
                 taskqueue.add(queue_name='gplus',
                               url='/tasks/harvest_so',
                               params={'key': account.key.urlsafe(), 'from': str(start), 'to': str(end)})
