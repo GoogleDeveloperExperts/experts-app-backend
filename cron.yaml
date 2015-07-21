@@ -18,8 +18,8 @@ cron:
 
 - description: stack overflow harvest
   url: /crons/harvest_so
-  schedule: 21 of july 13:45
-  # schedule: 1 of month 03:00
+  #schedule: 21 of july 13:45
+  schedule: 1 of month 03:00
 
 # - description: ad-hoc calc_impact
 #   url: /tasks/calc_impact
