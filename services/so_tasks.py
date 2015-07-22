@@ -77,8 +77,8 @@ class CronHarvestSO(webapp2.RequestHandler):
         logging.info('crons/harvest_so')
 
         # harvest a period i.e. from January 1st INITIAL RUN
-        # num_months = 3
-        # start_date = date(2014, 1, 1)
+        # num_months = 1
+        # start_date = date(2015, 6, 1)
 
         # normal monthly harvest >> HAS TO RUN ON THE FIRST OF THE MONTH
         if date.today().day != 1:
@@ -96,14 +96,15 @@ class CronHarvestSO(webapp2.RequestHandler):
             if account.type not in VALID_ACCOUNT_TYPES:
                 continue
             # uncomment this for testing against Patrick's account
-            # if account.gplus_id != "117346385807218227082":
+            # if account.gplus_id != "117346385807218227082": 109290164663410811176
+            # if account.gplus_id != "109290164663410811176":
             #     continue
 
             user_count += 1
 
             for i in range(0, num_months):
                 start = start_date + monthdelta(i)
-                end = start + monthdelta(1) - timedelta(1)
+                end = start + monthdelta(1)
                 taskqueue.add(queue_name='gplus',
                               url='/tasks/harvest_so',
                               params={'key': account.key.urlsafe(), 'from': str(start), 'to': str(end)})
@@ -198,12 +199,14 @@ class TaskHarvestSO(webapp2.RequestHandler):
                 link += link_tags
 
                 link_date = urllib.quote_plus(" is:answer created:") + \
-                    str(to_date.year) + '-' + str(to_date.month)
+                    str(to_date.year) + '-' + str(from_date.month)
 
                 link = link + link_date
 
+                to_date_human = to_date - timedelta(1)
+
                 title = "SO HARVEST - {} - from {} to {}".format(
-                    product_group.tag, str(from_date), str(to_date))
+                    product_group.tag, str(from_date), str(to_date_human))
 
                 activities = ActivityRecord.query(ActivityRecord.gplus_id == gde.gplus_id,
                                                   ActivityRecord.metadata.type == '#stackOverflow',
