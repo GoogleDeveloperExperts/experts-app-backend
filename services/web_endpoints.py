@@ -40,7 +40,7 @@ class ActivityRecordService(remote.Service):
 
         if not check_auth(activity_record.gplus_id, activity_record.api_key):
             raise endpoints.UnauthorizedException(
-                'Only GDEs and admins may enter or change data.')
+                'Only Experts and admins may enter or change data.')
 
         if activity_record.deleted is None:
             activity_record.deleted = False
@@ -56,7 +56,7 @@ class ActivityRecordService(remote.Service):
 
         if not check_auth(activity_record.gplus_id, activity_record.api_key):
             raise endpoints.UnauthorizedException(
-                'Only GDEs and admins may enter or change data.')
+                'Only Experts and admins may enter or change data.')
 
         if activity_record.deleted is None:
             activity_record.deleted = False
@@ -72,7 +72,7 @@ class ActivityRecordService(remote.Service):
 
         if not check_auth(activity_record.gplus_id, activity_record.api_key):
             raise endpoints.UnauthorizedException(
-                'Only GDEs and admins may enter or change data.')
+                'Only Experts and admins may enter or change data.')
 
         if activity_record.deleted is None:
             activity_record.deleted = False
@@ -89,7 +89,7 @@ class ActivityRecordService(remote.Service):
 
         if not check_auth(activity_record.gplus_id, activity_record.api_key):
             raise endpoints.UnauthorizedException(
-                'Only GDEs and admins may enter or change data.')
+                'Only Experts and admins may enter or change data.')
 
         activity_record.deleted = True
         activity_record.put()
@@ -105,7 +105,7 @@ class ActivityRecordService(remote.Service):
 
         if not check_auth(activity_record.gplus_id, activity_record.api_key):
             raise endpoints.UnauthorizedException(
-                'Only GDEs and admins may enter or change data.')
+                'Only Experts and admins may enter or change data.')
 
         # Mark associated Activity Posts as deleted
         if activity_record.gplus_posts is not None and len(activity_record.gplus_posts) > 0:

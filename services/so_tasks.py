@@ -78,7 +78,7 @@ class CronHarvestSO(webapp2.RequestHandler):
 
         # harvest a period i.e. from January 1st INITIAL RUN
         # num_months = 1
-        # start_date = date(2015, 6, 1)
+        # start_date = date(2015, 7, 1)
 
         # normal monthly harvest >> HAS TO RUN ON THE FIRST OF THE MONTH
         if date.today().day != 1:
@@ -110,7 +110,7 @@ class CronHarvestSO(webapp2.RequestHandler):
                               params={'key': account.key.urlsafe(), 'from': str(start), 'to': str(end)})
 
         logging.info(
-            'crons/harvest_so created tasks for %s users' % user_count)
+            'crons/harvest_so created tasks for {} users from {} to {}'.format(user_count, start, end))
 
 
 class TaskHarvestSO(webapp2.RequestHandler):
@@ -134,12 +134,12 @@ class TaskHarvestSO(webapp2.RequestHandler):
 
         logging.info("harvesting from {} to {}".format(from_date, to_date))
 
-        # populate product groups and tags associated with the GDE
+        # populate product groups and tags associated with the Expert
         # multiple product groups is not uncommon and even more so
         # with the polymer harvesting experiment
 
         # changed the approach above so that all product group questions
-        # are recorded independant of the GDE product group affiliation.
+        # are recorded independant of the Expert product group affiliation.
         pg_tags = {}
         product_groups = ProductGroup.query().fetch(100)
         for pg in product_groups:

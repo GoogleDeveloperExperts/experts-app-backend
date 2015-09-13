@@ -1,2 +1,2 @@
 # gde-app-backend
-Future home for the backend source of the GDE Tracking App
+Future home for the backend source of the Expert Tracking App
