@@ -72,6 +72,32 @@ class CronNewGplus(webapp2.RequestHandler):
         logging.info('crons/new_gplus created tasks for %s users' % user_count)
 
 
+class CronNewUserGplus(webapp2.RequestHandler):
+
+    """Creates tasks to get new gplus activities for each gde."""
+
+    def get(self):
+        """Create tasks."""
+        logging.info('crons/new_gplus')
+
+        accounts = Account.query()
+        user_count = 0
+        for account in accounts:
+            # only process valid account types
+            if account.type not in VALID_ACCOUNT_TYPES:
+                continue
+            # uncomment this for testing against a USER's account
+            if account.gplus_id != "100280111838016730110":
+                continue
+
+            user_count += 1
+            taskqueue.add(queue_name='gplus',
+                          url='/tasks/new_gplus',
+                          params={'gplus_id': account.gplus_id})
+
+        logging.info('crons/new_gplus created tasks for %s users' % user_count)
+
+
 class TaskNewGplus(webapp2.RequestHandler):
 
     """Gets new activities for a particular gde."""
@@ -131,6 +157,9 @@ class TaskNewGplus(webapp2.RequestHandler):
                         activity_record = find_or_create_ar(
                             gplus_activity, new_activity)
                         activity_record.add_post(new_activity)
+                    else:
+                        logging.info('Non Valid Post')
+                        logging.info(gplus_activity)
 
 
 def find_or_create_ar(gplus_activity, activity_post):
@@ -452,21 +481,21 @@ class TaskUpdateGplus(webapp2.RequestHandler):
         for account in accounts:
             email = account.email
 
-        body_s = "The GDE Tracking team thanks you for using the tool. \n\n"
+        body_s = "The Expert Tracking team thanks you for using the tool. \n\n"
         body_s += "The following post(s) is(are) missing Activity Type and/or Product Group hashtags. "
-        body_s += "Because of this, it(they) does not reflect in your GDE stats. \n\n"
+        body_s += "Because of this, it(they) does not reflect in your Expert stats. \n\n"
 
         for bad_post in bad_posts:
             body_s += "%s \n" % bad_post
 
         body_s += "\nKindly update your post(s) with #hashtags. A reminder of the valid "
         body_s += "hashtags can be found in the 'How Its Used?' section of http://gdetracking.gweb.io/. \n\n"
-        body_s += "GDE Tracking Team"
+        body_s += "Expert Tracking Team"
 
         try:
-            mail.send_mail(sender="GDE Tracking App Support <no-reply@omega-keep-406.appspotmail.com>",
+            mail.send_mail(sender="Expert Tracking App Support <no-reply@omega-keep-406.appspotmail.com>",
                            to=email,
-                           subject="GDE Activity Tracker : Missing hashtags on ActivityPost for %s " % datetime.now(
+                           subject="Expert Activity Tracker : Missing hashtags on ActivityPost for %s " % datetime.now(
                            ).strftime("%Y-%m-%d"),
                            body="""%s""" % body_s)
         except:

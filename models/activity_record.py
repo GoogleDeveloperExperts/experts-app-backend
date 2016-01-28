@@ -58,7 +58,7 @@ class ActivityRecord(EndpointsModel):
 
     _api_key = None
 
-    # we identify GDE's uniquely using this
+    # we identify Expert's uniquely using this
     gplus_id = ndb.StringProperty()
 
     # dates: are they really useful????

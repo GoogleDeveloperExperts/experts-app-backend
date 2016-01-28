@@ -112,13 +112,16 @@ def get_current_account():
 
     user = endpoints.get_current_user()
     if user is None:
+        logging.info('get_current_user returned none')
         return None
 
     email = user.email().lower()
+    logging.info(email)
 
     # Try latest recorded auth_email first
     accounts = Account.query(Account.auth_email == email).fetch(1)
     if len(accounts) > 0:
+        logging.info('auth_email returns')
         return accounts[0]
 
     # Try the user's default email next
@@ -127,6 +130,7 @@ def get_current_account():
         # Store auth email for next time
         accounts[0].auth_email = email
         accounts[0].put()
+        logging.info('default email returns')
         return accounts[0]
 
     # Try via the user's Google ID
@@ -136,8 +140,10 @@ def get_current_account():
         # Store auth email for next time
         accounts[0].auth_email = email
         accounts[0].put()
+        logging.info('Google ID returns')
         return accounts[0]
 
+    logging.info('None returns')
     return None
 
 
@@ -150,18 +156,21 @@ def check_auth(gplus_id, api_key):
 
     # check authenticated user
     user = get_current_account()
+    logging.info(user)
     if user is not None:
         # Users can change their own data
         if user.gplus_id == gplus_id:
+            logging.info('its a user')
             return True
 
         # Administrators can change everything
         if user.type == 'administrator':
+            logging.info('its an administrator')
             return True
 
         # We could do further checks here, depending on user.type, e.g.
-        #  "disabled" GDEs are not allowed
-        #  Only allow active GDEs to enter data
+        #  "disabled" Experts are not allowed
+        #  Only allow active Experts to enter data
         return False
 
     return False

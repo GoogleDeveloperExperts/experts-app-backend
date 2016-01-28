@@ -2,6 +2,7 @@
 
 from .update_gplus import TaskNewGplus
 from .update_gplus import CronNewGplus
+from .update_gplus import CronNewUserGplus
 
 from .update_gplus import TaskUpdateGplus
 from .update_gplus import CronUpdateGplus
@@ -17,6 +18,7 @@ from .so_tasks import CronHarvestSO
 import webapp2
 
 app = webapp2.WSGIApplication([('/crons/new_gplus', CronNewGplus),
+                               ('/crons/new_gplus_user', CronNewUserGplus),
                                ('/tasks/new_gplus', TaskNewGplus),
                                ('/crons/upd_gplus', CronUpdateGplus),
                                ('/tasks/upd_gplus', TaskUpdateGplus),
