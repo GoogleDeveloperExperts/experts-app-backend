@@ -72,6 +72,32 @@ class CronNewGplus(webapp2.RequestHandler):
         logging.info('crons/new_gplus created tasks for %s users' % user_count)
 
 
+class CronNewUserGplus(webapp2.RequestHandler):
+
+    """Creates tasks to get new gplus activities for each gde."""
+
+    def get(self):
+        """Create tasks."""
+        logging.info('crons/new_gplus')
+
+        accounts = Account.query()
+        user_count = 0
+        for account in accounts:
+            # only process valid account types
+            if account.type not in VALID_ACCOUNT_TYPES:
+                continue
+            # uncomment this for testing against a USER's account
+            if account.gplus_id != "100280111838016730110":
+                continue
+
+            user_count += 1
+            taskqueue.add(queue_name='gplus',
+                          url='/tasks/new_gplus',
+                          params={'gplus_id': account.gplus_id})
+
+        logging.info('crons/new_gplus created tasks for %s users' % user_count)
+
+
 class TaskNewGplus(webapp2.RequestHandler):
 
     """Gets new activities for a particular gde."""
@@ -131,6 +157,9 @@ class TaskNewGplus(webapp2.RequestHandler):
                         activity_record = find_or_create_ar(
                             gplus_activity, new_activity)
                         activity_record.add_post(new_activity)
+                    else:
+                        logging.info('Non Valid Post')
+                        logging.info(gplus_activity)
 
 
 def find_or_create_ar(gplus_activity, activity_post):

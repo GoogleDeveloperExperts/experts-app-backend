@@ -138,7 +138,7 @@ class ActivityPostService(remote.Service):
             raise endpoints.NotFoundException('ActivityPost not found.')
         return activity_post
 
-    @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken'),
+    @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
                                path='activityPost', name='list')
     def ActivityPostList(self, query):
         return query
