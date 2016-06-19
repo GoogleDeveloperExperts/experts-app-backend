@@ -2,6 +2,7 @@
 Future home for the backend source of the Expert Tracking App
 
 ## Account
+    id
     display_name = ndb.StringProperty()
     email = ndb.StringProperty()
     type = ndb.StringProperty() # GDE type, read only field
@@ -11,39 +12,30 @@ Future home for the backend source of the Expert Tracking App
     social_googleplus = ndb.StringProperty()
     social_facebook = ndb.StringProperty()
     social_stackoverflow = ndb.StringProperty()
-
-###### Changes
+###### Model Changes
     location -> city
 
-## Activity Record
+## Activity Record (Master Record)
+    date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
-    type = ndb.StringProperty()
     city = ndb.StringProperty()
     country = ndb.StringProperty()
-    date = ndb.DateProperty()
-
-###### Changes
-    location -> city
-
-## Activity Post
-    gplus_id = ndb.StringProperty()
-    date_created = ndb.DateTimeProperty(auto_now_add=True)
-    date_updated = ndb.DateTimeProperty(auto_now=True)
-    post_date = ndb.StringProperty()
-    activity_title = ndb.StringProperty()
     activity_types = ndb.StringProperty(repeated=True)
-    product_groups = ndb.StringProperty(repeated=True)
     activity_posts = ndb.StringProperty(repeated=True)
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
-    city = ndb.StringProperty()
-    country = ndb.StringProperty()
-    description = ndb.StringProperty()
-    deleted = ndb.BooleanProperty()
+###### Model Changes
+    location -> city
 
-###### Changes
+## Activity Post (Child Record)
+    type = ndb.StringProperty()
+    url = ndb.StringProperty()
+    metric_reached = ndb.IntegerProperty()
+    metric_indirect = ndb.IntegerProperty()
+    metric_trained = ndb.IntegerProperty()
+###### Model Changes
     location -> city
 
 ## Activity Group
