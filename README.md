@@ -13,6 +13,7 @@ Future home for the backend source of the Expert Tracking App
     social_stackoverflow = ndb.StringProperty()
 
 ## Activity Record (Master Record)
+    gplus_id = ndb.StringProperty()
     date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
