@@ -64,38 +64,6 @@ class ActivityRecordService(remote.Service):
         activity_record.put()
         return activity_record
 
-    @ActivityRecord.method(path='/activityRecord/{id}', http_method='PATCH',
-                           name='patch')
-    def ActivityRecordPatch(self, activity_record):
-        if not activity_record.from_datastore:
-            raise endpoints.NotFoundException('ActivityRecord not found.')
-
-        if not check_auth(activity_record.gplus_id, activity_record.api_key):
-            raise endpoints.UnauthorizedException(
-                'Only Experts and admins may enter or change data.')
-
-        if activity_record.deleted is None:
-            activity_record.deleted = False
-
-        activity_record.put()
-        return activity_record
-
-    @ActivityRecord.method(request_fields=('id', 'api_key',), response_fields=('id',),
-                           path='/activityRecord/trash/{id}',
-                           http_method='DELETE', name='trash')
-    def ActivityRecordTrash(self, activity_record):
-        if not activity_record.from_datastore:
-            raise endpoints.NotFoundException('ActivityRecord not found.')
-
-        if not check_auth(activity_record.gplus_id, activity_record.api_key):
-            raise endpoints.UnauthorizedException(
-                'Only Experts and admins may enter or change data.')
-
-        activity_record.deleted = True
-        activity_record.put()
-
-        return activity_record
-
     @ActivityRecord.method(request_fields=('id', 'api_key',), response_fields=('id',),
                            path='/activityRecord/delete/{id}',
                            http_method='DELETE', name='delete')
@@ -153,7 +121,7 @@ class AccountService(remote.Service):
                             'display_name',
                             'email',
                             'type',
-                            'city',
+                            'location',
                             'country',
                             'social_twitter',
                             'social_googleplus',
@@ -165,7 +133,7 @@ class AccountService(remote.Service):
                             'display_name',
                             'email',
                             'type',
-                            'city',
+                            'location',
                             'country',
                             'social_twitter',
                             'social_googleplus',

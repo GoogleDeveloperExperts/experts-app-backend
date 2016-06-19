@@ -2,32 +2,27 @@
 Future home for the backend source of the Expert Tracking App
 
 ## Account
-    id
     display_name = ndb.StringProperty()
     email = ndb.StringProperty()
     type = ndb.StringProperty() # GDE type, read only field
-    city = ndb.StringProperty()
+    location = ndb.StringProperty()
     country = ndb.StringProperty()
     social_twitter = ndb.StringProperty()
     social_googleplus = ndb.StringProperty()
     social_facebook = ndb.StringProperty()
     social_stackoverflow = ndb.StringProperty()
-###### Model Changes
-    location -> city
 
 ## Activity Record (Master Record)
     date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
-    city = ndb.StringProperty()
+    location = ndb.StringProperty()
     country = ndb.StringProperty()
     activity_types = ndb.StringProperty(repeated=True)
     activity_posts = ndb.StringProperty(repeated=True)
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
-###### Model Changes
-    location -> city
 
 ## Activity Post (Child Record)
     type = ndb.StringProperty()
@@ -35,8 +30,6 @@ Future home for the backend source of the Expert Tracking App
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
-###### Model Changes
-    location -> city
 
 ## Activity Group
     description = ndb.StringProperty()
