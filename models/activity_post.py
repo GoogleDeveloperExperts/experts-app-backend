@@ -13,6 +13,7 @@ class ActivityPost(EndpointsModel):
 
     _message_fields_schema = (
         'id',
+        'gplus_id',
         'type',
         'url',
         'metric_reached',
@@ -23,6 +24,7 @@ class ActivityPost(EndpointsModel):
     _api_key = None
 
     # MVP fields
+    gplus_id = ndb.StringProperty()
     type = ndb.StringProperty()
     url = ndb.StringProperty()
     metric_reached = ndb.IntegerProperty()

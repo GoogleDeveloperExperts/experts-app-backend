@@ -26,6 +26,7 @@ Future home for the backend source of the Expert Tracking App
     metric_trained = ndb.IntegerProperty()
 
 ## Activity Post (Child Record)
+    gplus_id = ndb.StringProperty()
     type = ndb.StringProperty()
     url = ndb.StringProperty()
     metric_reached = ndb.IntegerProperty()
