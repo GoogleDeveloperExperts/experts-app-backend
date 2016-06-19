@@ -11,24 +11,39 @@ class AccountGeoCode(EndpointsModel):
 
 class Account(EndpointsModel):
 
-    _message_fields_schema = ('id', 'gplus_id', 'gplus_page', 'type',
-                              'display_name', 'pic_url', 'geocode',
-                              'real_name', 'location', 'region',
-                              'country', 'ctry_filename', 'product_group',
-                              'pg_filename', 'deleted', 'so_id')
+    _message_fields_schema = (
+        'id',
+        'display_name',
+        'email',
+        'type',
+        'city',
+        'country',
+        'social_twitter',
+        'social_googleplus',
+        'social_facebook',
+        'social_stackoverflow'
+    )
 
     _api_key = None
 
+    # MVP fields
+    display_name = ndb.StringProperty()
+    email = ndb.StringProperty()
+    type = ndb.StringProperty() # GDE type, read only field
+    city = ndb.StringProperty()
+    country = ndb.StringProperty()
+    social_twitter = ndb.StringProperty()
+    social_googleplus = ndb.StringProperty()
+    social_facebook = ndb.StringProperty()
+    social_stackoverflow = ndb.StringProperty()
+
+
     gplus_id = ndb.StringProperty()
     gplus_page = ndb.StringProperty()
-    type = ndb.StringProperty()
-    display_name = ndb.StringProperty()
     real_name = ndb.StringProperty()
-    email = ndb.StringProperty()
     auth_email = ndb.StringProperty()
     location = ndb.StringProperty()
     region = ndb.StringProperty()
-    country = ndb.StringProperty()
     ctry_filename = ndb.StringProperty()
     geocode = ndb.StructuredProperty(AccountGeoCode)
     product_group = ndb.StringProperty(repeated=True)
