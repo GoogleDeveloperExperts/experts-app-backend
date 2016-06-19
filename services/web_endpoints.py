@@ -89,8 +89,7 @@ class ActivityRecordService(remote.Service):
 
         return activity_record
 
-    @ActivityRecord.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id',
-                                               'minDate', 'maxDate', 'deleted', 'includeDeleted'),
+    @ActivityRecord.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
                                  path='activityRecord', name='list')
     def ActivityRecordList(self, query):
         return query
@@ -105,6 +104,10 @@ class ActivityPostService(remote.Service):
         if not activity_post.from_datastore:
             raise endpoints.NotFoundException('ActivityPost not found.')
         return activity_post
+
+    # TODO: Add ActivityPostInsert method
+    # TODO: Add ActivityPostUpdate method
+    # TODO: Add ActivityPostDelete method
 
     @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
                                path='activityPost', name='list')
