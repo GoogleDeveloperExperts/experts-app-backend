@@ -1,2 +1,75 @@
 # gde-app-backend
 Future home for the backend source of the Expert Tracking App
+
+## Account
+    display_name = ndb.StringProperty()
+    email = ndb.StringProperty()
+    type = ndb.StringProperty() # GDE type, read only field
+    city = ndb.StringProperty()
+    country = ndb.StringProperty()
+    social_twitter = ndb.StringProperty()
+    social_googleplus = ndb.StringProperty()
+    social_facebook = ndb.StringProperty()
+    social_stackoverflow = ndb.StringProperty()
+
+###### Changes
+    location -> city
+
+## Activity Record
+    title = ndb.StringProperty()
+    description = ndb.StringProperty()
+    type = ndb.StringProperty()
+    city = ndb.StringProperty()
+    country = ndb.StringProperty()
+    date = ndb.DateProperty()
+
+###### Changes
+    location -> city
+
+## Activity Post
+    gplus_id = ndb.StringProperty()
+    date_created = ndb.DateTimeProperty(auto_now_add=True)
+    date_updated = ndb.DateTimeProperty(auto_now=True)
+    post_date = ndb.StringProperty()
+    activity_title = ndb.StringProperty()
+    activity_types = ndb.StringProperty(repeated=True)
+    product_groups = ndb.StringProperty(repeated=True)
+    activity_posts = ndb.StringProperty(repeated=True)
+    metric_reached = ndb.IntegerProperty()
+    metric_indirect = ndb.IntegerProperty()
+    metric_trained = ndb.IntegerProperty()
+    city = ndb.StringProperty()
+    country = ndb.StringProperty()
+    description = ndb.StringProperty()
+    deleted = ndb.BooleanProperty()
+
+###### Changes
+    location -> city
+
+## Activity Group
+    description = ndb.StringProperty()
+    google_expensed = ndb.StringProperty()
+    impact = ndb.StringProperty()
+    link = ndb.StringProperty()
+    location = ndb.StringProperty()
+    other_link1 = ndb.StringProperty()
+    other_link2 = ndb.StringProperty()
+    tag = ndb.StringProperty()
+    title = ndb.StringProperty()
+    types = ndb.StringProperty(repeated=True)
+    us_approx_amount = ndb.StringProperty()
+
+
+## Activity Type
+    description = ndb.StringProperty()
+    group = ndb.StringProperty()
+    tag = ndb.StringProperty()
+
+## Product Group
+    tag = ndb.StringProperty()
+    category = ndb.StringProperty()
+    description = ndb.StringProperty()
+    image = ndb.StringProperty()
+    product = ndb.StringProperty()
+    so_tags = ndb.StringProperty(repeated=True)
+    url = ndb.StringProperty()
