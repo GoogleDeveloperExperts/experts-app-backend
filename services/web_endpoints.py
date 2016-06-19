@@ -105,9 +105,43 @@ class ActivityPostService(remote.Service):
             raise endpoints.NotFoundException('ActivityPost not found.')
         return activity_post
 
-    # TODO: Add ActivityPostInsert method
-    # TODO: Add ActivityPostUpdate method
-    # TODO: Add ActivityPostDelete method
+    @ActivityPost.method(path='/activityPost', http_method='POST',
+                           name='insert')
+    def ActivityPostInsert(self, activity_post):
+
+        if not check_auth(activity_post.gplus_id, activity_post.api_key):
+            raise endpoints.UnauthorizedException(
+                'Only Experts and admins may enter or change data.')
+
+        activity_post.put()
+        return activity_post
+
+    @ActivityPost.method(path='/activityPost/{id}', http_method='PUT',
+                           name='update')
+    def ActivityPostUpdate(self, activity_post):
+        if not activity_post.from_datastore:
+            raise endpoints.NotFoundException('ActivityPost not found.')
+
+        if not check_auth(activity_post.gplus_id, activity_post.api_key):
+            raise endpoints.UnauthorizedException(
+                'Only Experts and admins may enter or change data.')
+
+        activity_post.put()
+        return activity_post
+
+    @ActivityPost.method(request_fields=('id', 'api_key',), response_fields=('id',),
+                           path='/activityPost/delete/{id}',
+                           http_method='DELETE', name='delete')
+    def ActivityPostDelete(self, activity_post):
+        if not activity_post.from_datastore:
+            raise endpoints.NotFoundException('ActivityPost not found.')
+
+        if not check_auth(activity_post.gplus_id, activity_post.api_key):
+            raise endpoints.UnauthorizedException(
+                'Only Experts and admins may enter or change data.')
+
+        activity_post.key.delete()
+        return activity_post
 
     @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
                                path='activityPost', name='list')
