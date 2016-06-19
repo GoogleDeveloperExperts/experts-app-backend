@@ -42,9 +42,6 @@ class ActivityRecordService(remote.Service):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
-        if activity_record.deleted is None:
-            activity_record.deleted = False
-
         activity_record.put()
         return activity_record
 
@@ -57,9 +54,6 @@ class ActivityRecordService(remote.Service):
         if not check_auth(activity_record.gplus_id, activity_record.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
-
-        if activity_record.deleted is None:
-            activity_record.deleted = False
 
         activity_record.put()
         return activity_record
@@ -77,16 +71,12 @@ class ActivityRecordService(remote.Service):
 
         # Mark associated Activity Posts as deleted
         if activity_record.gplus_posts is not None and len(activity_record.gplus_posts) > 0:
-            keys = [ndb.Key(ActivityPost, post_id)
-                    for post_id in activity_record.gplus_posts]
-            posts = ndb.get_multi(keys)
-            for post in posts:
-                if post is not None:
-                    post.deleted = True
-                    post.put()
+            keys = [ndb.Key(ActivityPost, id) for id in activity_record.activity_posts]
+            activity_posts = ndb.get_multi(keys)
+            for activity_post in activity_posts:
+                activity_post.key.delete()
 
         activity_record.key.delete()
-
         return activity_record
 
     @ActivityRecord.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
