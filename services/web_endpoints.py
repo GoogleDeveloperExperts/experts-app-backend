@@ -148,24 +148,28 @@ class AccountService(remote.Service):
                             'display_name',
                             'email',
                             'type',
-                            'location',
+                            'city',
                             'country',
                             'social_twitter',
                             'social_googleplus',
                             'social_facebook',
-                            'social_stackoverflow'
+                            'social_stackoverflow',
+                            'pg_filename',
+                            'pic_url'
                     ),
                     response_fields=(
                             'id',
                             'display_name',
                             'email',
                             'type',
-                            'location',
+                            'city',
                             'country',
                             'social_twitter',
                             'social_googleplus',
                             'social_facebook',
-                            'social_stackoverflow'
+                            'social_stackoverflow',
+                            'pg_filename',
+                            'pic_url'
                     ))
     def AccountInsert(self, account):
         if not check_auth(None, account.api_key):
@@ -233,7 +237,7 @@ class ActivityGroupService(remote.Service):
 
     @ActivityGroup.method(path='/activityGroup/{id}', http_method='POST', name='insert',
                           request_fields=('id', 'tag', 'types', 'title', 'description', 'link',
-                                          'impact', 'other_link1', 'other_link2', 'location',
+                                          'impact', 'other_link1', 'other_link2', 'city',
                                           'google_expensed', 'us_approx_amount', 'api_key'))
     def ag_insert(self, activity_group):
         if not check_auth(None, activity_group.api_key):

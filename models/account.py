@@ -21,7 +21,9 @@ class Account(EndpointsModel):
         'social_twitter',
         'social_googleplus',
         'social_facebook',
-        'social_stackoverflow'
+        'social_stackoverflow',
+        'pg_filename',
+        'pic_url'
     )
 
     _api_key = None
@@ -36,6 +38,9 @@ class Account(EndpointsModel):
     social_googleplus = ndb.StringProperty()
     social_facebook = ndb.StringProperty()
     social_stackoverflow = ndb.StringProperty()
+    pg_filename = ndb.StringProperty()
+    pic_url = ndb.StringProperty()
+
 
     def ApiKeySet(self, value):
         self._api_key = value
@@ -64,8 +69,6 @@ class Account(EndpointsModel):
     ctry_filename = ndb.StringProperty()
     geocode = ndb.StructuredProperty(AccountGeoCode)
     product_group = ndb.StringProperty(repeated=True)
-    pg_filename = ndb.StringProperty()
     deleted = ndb.BooleanProperty()
-    pic_url = ndb.StringProperty()
     so_id = ndb.StringProperty()
 

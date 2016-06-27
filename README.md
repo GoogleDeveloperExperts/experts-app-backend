@@ -5,19 +5,32 @@ Future home for the backend source of the Expert Tracking App
     display_name = ndb.StringProperty()
     email = ndb.StringProperty()
     type = ndb.StringProperty() # GDE type, read only field
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     country = ndb.StringProperty()
     social_twitter = ndb.StringProperty()
     social_googleplus = ndb.StringProperty()
     social_facebook = ndb.StringProperty()
     social_stackoverflow = ndb.StringProperty()
+    pg_filename = ndb.StringProperty()
+    pic_url = ndb.StringProperty()
+###### Field renames:
+    location -> city
+    ctry_filename -> country
+    gplus_id -> social_googleplus
+    so_id -> social_stackoverflow
+###### Do we need it ? What is required on the frontend ?
+    geocode
+###### Field removed:
+    product_group
+    deleted
+
 
 ## Activity Record (Master Record)
     gplus_id = ndb.StringProperty()
     date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     country = ndb.StringProperty()
     activity_types = ndb.StringProperty(repeated=True)
     activity_posts = ndb.StringProperty(repeated=True)
@@ -38,7 +51,7 @@ Future home for the backend source of the Expert Tracking App
     google_expensed = ndb.StringProperty()
     impact = ndb.StringProperty()
     link = ndb.StringProperty()
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     other_link1 = ndb.StringProperty()
     other_link2 = ndb.StringProperty()
     tag = ndb.StringProperty()
