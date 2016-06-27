@@ -7,7 +7,7 @@ from protorpc import messages
 class ActivityGroup(EndpointsModel):
 
     _message_fields_schema = ('id', 'tag', 'types', 'title', 'description', 'link',
-                              'impact', 'other_link1', 'other_link2', 'location',
+                              'impact', 'other_link1', 'other_link2', 'city',
                               'google_expensed', 'us_approx_amount')
 
     _api_key = None
@@ -26,7 +26,7 @@ class ActivityGroup(EndpointsModel):
     impact = ndb.StringProperty()
     other_link1 = ndb.StringProperty()
     other_link2 = ndb.StringProperty()
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     google_expensed = ndb.StringProperty()
     us_approx_amount = ndb.StringProperty()
 

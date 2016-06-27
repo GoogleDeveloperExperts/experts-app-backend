@@ -41,7 +41,7 @@ class ActivityMetaData(EndpointsModel):
     other_link2 = ndb.StringProperty()
 
     # community, techtalk
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     google_expensed = ndb.BooleanProperty()
     us_approx_amount = EndpointsVariantIntegerProperty(
         variant=messages.Variant.INT32)
@@ -55,7 +55,7 @@ class ActivityRecord(EndpointsModel):
         'date',
         'title',
         'description',
-        'location',
+        'city',
         'country',
         'activity_types',
         'activity_posts',
@@ -71,7 +71,7 @@ class ActivityRecord(EndpointsModel):
     date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     country = ndb.StringProperty()
     activity_types = ndb.StringProperty(repeated=True)
     activity_posts = ndb.StringProperty(repeated=True)

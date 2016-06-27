@@ -16,7 +16,7 @@ class Account(EndpointsModel):
         'display_name',
         'email',
         'type',
-        'location',
+        'city',
         'country',
         'social_twitter',
         'social_googleplus',
@@ -30,7 +30,7 @@ class Account(EndpointsModel):
     display_name = ndb.StringProperty()
     email = ndb.StringProperty()
     type = ndb.StringProperty() # GDE type, read only field
-    location = ndb.StringProperty()
+    city = ndb.StringProperty()
     country = ndb.StringProperty()
     social_twitter = ndb.StringProperty()
     social_googleplus = ndb.StringProperty()
