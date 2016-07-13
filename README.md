@@ -1,6 +1,17 @@
 # gde-app-backend
 Future home for the backend source of the Expert Tracking App
 
+# Makefile for development / deployment
+Please check Makefile for reference (Makefile can be frustrating to work with if you mix tab and spaces).
+
+    $ make          # Run local dev server by default.
+
+    $ deploy        # Deploy the app depending on project and version in the Makefile.
+
+    $ dev           # Run local dev server
+
+    $ chrrome_dev   # Start Chrome with unsafely-treat-insecure-origin-as-secure to test API locally.
+
 ## Account
     display_name = ndb.StringProperty()
     email = ndb.StringProperty()
