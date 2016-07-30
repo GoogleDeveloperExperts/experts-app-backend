@@ -1,7 +1,7 @@
 default: dev
 
 deploy:
-	gcloud preview app deploy --project elite-firefly-737 --version 6 app.yaml
+	gcloud preview app deploy --project elite-firefly-737 --version 5 app.yaml
 
 dev:
 	dev_appserver.py .
