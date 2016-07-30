@@ -45,7 +45,7 @@ class Account(EndpointsModel):
     pic_url = ndb.StringProperty()
     product_group = ndb.StringProperty(repeated=True)
     skills = ndb.StringProperty(repeated=True)
-    biography = ndb.Text()
+    biography = ndb.TextProperty()
 
 
     def ApiKeySet(self, value):
