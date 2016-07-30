@@ -24,7 +24,9 @@ class Account(EndpointsModel):
         'social_stackoverflow',
         'pg_filename',
         'pic_url',
-        'product_group'
+        'product_group',
+        'skills',
+        'biography'
     )
 
     _api_key = None
@@ -42,6 +44,8 @@ class Account(EndpointsModel):
     pg_filename = ndb.StringProperty()
     pic_url = ndb.StringProperty()
     product_group = ndb.StringProperty(repeated=True)
+    skills = ndb.StringProperty(repeated=True)
+    biography = ndb.Text()
 
 
     def ApiKeySet(self, value):
