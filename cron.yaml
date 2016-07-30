@@ -6,8 +6,8 @@
 cron:
 - description: daily new_gplus
   url: /crons/new_gplus
-  # schedule: 11 of july 15:10
-  schedule: every day 00:30
+  schedule: 11 of july 15:10
+  # schedule: every day 00:30
 
 - description: daily new_gplus_user
   url: /crons/new_gplus_user
@@ -15,13 +15,13 @@ cron:
 
 - description: weekly upd_gplus
   url: /crons/upd_gplus
-  # schedule: 12 of july 08:21
-  schedule: every wed 01:30
+  schedule: 12 of july 08:21
+  # schedule: every wed 01:30
 
 - description: stack overflow harvest
   url: /crons/harvest_so
-  # schedule: 21 of july 13:45
-  schedule: 1 of month 03:00
+  schedule: 21 of july 13:45
+  # schedule: 1 of month 03:00
 
 # - description: ad-hoc calc_impact
 #   url: /tasks/calc_impact
