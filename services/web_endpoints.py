@@ -168,7 +168,7 @@ class AccountService(remote.Service):
                             'pic_url'
                     ))
     def AccountInsert(self, account):
-        if not check_auth(account.email, account.api_key):
+        if not check_auth(None, account.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Admins may enter or change this data.')
         account.put()

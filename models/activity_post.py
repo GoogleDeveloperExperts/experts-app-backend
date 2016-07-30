@@ -24,7 +24,7 @@ class ActivityPost(EndpointsModel):
     _api_key = None
 
     # MVP fields
-    email = ndb.StringProperty()
+    email = ndb.StringProperty(required=True)
     type = ndb.StringProperty()
     url = ndb.StringProperty()
     metric_reached = ndb.IntegerProperty()

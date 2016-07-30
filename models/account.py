@@ -33,7 +33,7 @@ class Account(EndpointsModel):
 
     # MVP fields
     display_name = ndb.StringProperty()
-    email = ndb.StringProperty()
+    email = ndb.StringProperty(required=True)
     type = ndb.StringProperty() # GDE type, read only field
     city = ndb.StringProperty()
     country = ndb.StringProperty()

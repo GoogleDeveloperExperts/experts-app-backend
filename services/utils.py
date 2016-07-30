@@ -14,6 +14,7 @@ from datetime import date
 from google.appengine.api import app_identity
 from google.appengine.api import mail
 from google.appengine.api import urlfetch
+from google.appengine.api import users
 from apiclient.discovery import build
 
 from models import ActivityPost
@@ -147,30 +148,12 @@ def get_current_account():
     return None
 
 
-def check_auth(gplus_id, api_key):
+def check_auth(email, api_key):
+    if api_key is not None and api_key == get_admin_api_key():
+        return True
 
-    # Check against API Key for maintainance script
-    if api_key is not None:
-        if api_key == get_admin_api_key():
-            return True
-
-    # check authenticated user
-    user = get_current_account()
-    logging.info(user)
-    if user is not None:
-        # Users can change their own data
-        if user.gplus_id == gplus_id:
-            logging.info('its a user')
-            return True
-
-        # Administrators can change everything
-        if user.type == 'administrator':
-            logging.info('its an administrator')
-            return True
-
-        # We could do further checks here, depending on user.type, e.g.
-        #  "disabled" Experts are not allowed
-        #  Only allow active Experts to enter data
-        return False
+    accounts = Account.query(Account.email == email).fetch(1)
+    if email is not None and endpoints.get_current_user() is not None and len(accounts) == 1:
+        return email == endpoints.get_current_user().email() and email == accounts[0].email
 
     return False

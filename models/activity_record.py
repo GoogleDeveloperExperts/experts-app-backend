@@ -68,7 +68,7 @@ class ActivityRecord(EndpointsModel):
     _api_key = None
 
     # MVP fields
-    email = ndb.StringProperty()
+    email = ndb.StringProperty(required=True)
     date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
