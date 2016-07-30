@@ -19,7 +19,7 @@ _CLIENT_IDs = [
     '66416776373-3k5goi8hn9d5rih68t8km57iliithohb.apps.googleusercontent.com'
 ]
 
-api_root = endpoints.api(name='expertstracking', version='v1', allowed_client_ids=_CLIENT_IDs)
+api_root = endpoints.api(name='expertstracking', version='v2.0', allowed_client_ids=_CLIENT_IDs)
 
 
 @api_root.api_class(resource_name='activity_record', path='activityRecord')
