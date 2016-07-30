@@ -19,14 +19,11 @@ _CLIENT_IDs = [
     '66416776373-3k5goi8hn9d5rih68t8km57iliithohb.apps.googleusercontent.com'
 ]
 
-api_root = endpoints.api(
-    name='gdetracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
-# name='expertstracking', version='v1.0b2', allowed_client_ids=_CLIENT_IDs)
+api_root = endpoints.api(name='expertstracking', version='v1', allowed_client_ids=_CLIENT_IDs)
 
 
 @api_root.api_class(resource_name='activity_record', path='activityRecord')
 class ActivityRecordService(remote.Service):
-
     @ActivityRecord.method(request_fields=('id',), path='/activityRecord/{id}',
                            http_method='GET', name='get')
     def get(self, activity_record):
@@ -38,7 +35,7 @@ class ActivityRecordService(remote.Service):
                            name='insert')
     def ActivityRecordInsert(self, activity_record):
 
-        if not check_auth(activity_record.gplus_id, activity_record.api_key):
+        if not check_auth(activity_record.email, activity_record.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
@@ -51,7 +48,7 @@ class ActivityRecordService(remote.Service):
         if not activity_record.from_datastore:
             raise endpoints.NotFoundException('ActivityRecord not found.')
 
-        if not check_auth(activity_record.gplus_id, activity_record.api_key):
+        if not check_auth(activity_record.email, activity_record.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
@@ -65,7 +62,7 @@ class ActivityRecordService(remote.Service):
         if not activity_record.from_datastore:
             raise endpoints.NotFoundException('ActivityRecord not found.')
 
-        if not check_auth(activity_record.gplus_id, activity_record.api_key):
+        if not check_auth(activity_record.email, activity_record.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
@@ -79,7 +76,7 @@ class ActivityRecordService(remote.Service):
         activity_record.key.delete()
         return activity_record
 
-    @ActivityRecord.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
+    @ActivityRecord.query_method(query_fields=('limit', 'order', 'pageToken', 'email'),
                                  path='activityRecord', name='list')
     def ActivityRecordList(self, query):
         return query
@@ -87,8 +84,7 @@ class ActivityRecordService(remote.Service):
 
 @api_root.api_class(resource_name='activity_post', path='activityPost')
 class ActivityPostService(remote.Service):
-
-    @ActivityPost.method(request_fields=('id',),  path='/activityPost/{id}',
+    @ActivityPost.method(request_fields=('id',), path='/activityPost/{id}',
                          http_method='GET', name='get')
     def get(self, activity_post):
         if not activity_post.from_datastore:
@@ -96,10 +92,10 @@ class ActivityPostService(remote.Service):
         return activity_post
 
     @ActivityPost.method(path='/activityPost', http_method='POST',
-                           name='insert')
+                         name='insert')
     def ActivityPostInsert(self, activity_post):
 
-        if not check_auth(activity_post.gplus_id, activity_post.api_key):
+        if not check_auth(activity_post.email, activity_post.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
@@ -107,12 +103,12 @@ class ActivityPostService(remote.Service):
         return activity_post
 
     @ActivityPost.method(path='/activityPost/{id}', http_method='PUT',
-                           name='update')
+                         name='update')
     def ActivityPostUpdate(self, activity_post):
         if not activity_post.from_datastore:
             raise endpoints.NotFoundException('ActivityPost not found.')
 
-        if not check_auth(activity_post.gplus_id, activity_post.api_key):
+        if not check_auth(activity_post.email, activity_post.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
@@ -120,13 +116,13 @@ class ActivityPostService(remote.Service):
         return activity_post
 
     @ActivityPost.method(request_fields=('id', 'api_key',), response_fields=('id',),
-                           path='/activityPost/delete/{id}',
-                           http_method='DELETE', name='delete')
+                         path='/activityPost/delete/{id}',
+                         http_method='DELETE', name='delete')
     def ActivityPostDelete(self, activity_post):
         if not activity_post.from_datastore:
             raise endpoints.NotFoundException('ActivityPost not found.')
 
-        if not check_auth(activity_post.gplus_id, activity_post.api_key):
+        if not check_auth(activity_post.email, activity_post.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
@@ -141,9 +137,9 @@ class ActivityPostService(remote.Service):
 
 @api_root.api_class(resource_name='account', path='account')
 class AccountService(remote.Service):
-
     @Account.method(path='/account/{id}', http_method='POST', name='insert',
                     request_fields=(
+                            'api_key',
                             'id',
                             'display_name',
                             'email',
@@ -172,14 +168,13 @@ class AccountService(remote.Service):
                             'pic_url'
                     ))
     def AccountInsert(self, account):
-        if not check_auth(None, account.api_key):
+        if not check_auth(account.email, account.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Admins may enter or change this data.')
-
         account.put()
         return account
 
-    @Account.method(request_fields=('id',),  path='/account/{id}',
+    @Account.method(request_fields=('id',), path='/account/{id}',
                     http_method='GET', name='get')
     def get(self, account):
         if not account.from_datastore:
@@ -194,7 +189,6 @@ class AccountService(remote.Service):
 
 @api_root.api_class(resource_name='activity_type', path='activityType')
 class ActivityTypeService(remote.Service):
-
     @ActivityType.method(path='/activityType/{id}', http_method='POST', name='insert',
                          request_fields=('id', 'tag', 'description', 'group', 'api_key'))
     def at_insert(self, activity_type):
@@ -205,7 +199,7 @@ class ActivityTypeService(remote.Service):
         activity_type.put()
         return activity_type
 
-    @ActivityType.method(request_fields=('id',),  path='/activityType/{id}',
+    @ActivityType.method(request_fields=('id',), path='/activityType/{id}',
                          http_method='GET', name='get')
     def at_get(self, activity_type):
         if not activity_type.from_datastore:
@@ -234,7 +228,6 @@ class ActivityTypeService(remote.Service):
 
 @api_root.api_class(resource_name='activity_group', path='activityGroup')
 class ActivityGroupService(remote.Service):
-
     @ActivityGroup.method(path='/activityGroup/{id}', http_method='POST', name='insert',
                           request_fields=('id', 'tag', 'types', 'title', 'description', 'link',
                                           'impact', 'other_link1', 'other_link2', 'city',
@@ -247,7 +240,7 @@ class ActivityGroupService(remote.Service):
         activity_group.put()
         return activity_group
 
-    @ActivityGroup.method(request_fields=('id',),  path='/activityGroup/{id}',
+    @ActivityGroup.method(request_fields=('id',), path='/activityGroup/{id}',
                           http_method='GET', name='get')
     def ag_get(self, activity_group):
         if not activity_group.from_datastore:
@@ -276,9 +269,10 @@ class ActivityGroupService(remote.Service):
 
 @api_root.api_class(resource_name='product_group', path='productGroup')
 class ProductGroupService(remote.Service):
-
     @ProductGroup.method(path='/productGroup/{id}', http_method='POST', name='insert',
-                         request_fields=('id', 'tag', 'description', 'category', 'product', 'url', 'image', 'api_key', 'so_tags'))
+                         request_fields=(
+                                 'id', 'tag', 'description', 'category', 'product', 'url', 'image', 'api_key',
+                                 'so_tags'))
     def pg_insert(self, product_group):
         if not check_auth(None, product_group.api_key):
             raise endpoints.UnauthorizedException(
@@ -287,7 +281,7 @@ class ProductGroupService(remote.Service):
         product_group.put()
         return product_group
 
-    @ProductGroup.method(request_fields=('id',),  path='/productGroup/{id}',
+    @ProductGroup.method(request_fields=('id',), path='/productGroup/{id}',
                          http_method='GET', name='get')
     def pg_get(self, product_group):
         if not product_group.from_datastore:
