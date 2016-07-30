@@ -51,7 +51,7 @@ class ActivityRecord(EndpointsModel):
 
     _message_fields_schema = (
         'id',
-        'gplus_id',
+        'email',
         'date',
         'title',
         'description',
@@ -61,13 +61,14 @@ class ActivityRecord(EndpointsModel):
         'activity_posts',
         'metric_reached',
         'metric_indirect',
-        'metric_trained'
+        'metric_trained',
+        'product_groups'
     )
 
     _api_key = None
 
     # MVP fields
-    gplus_id = ndb.StringProperty()
+    email = ndb.StringProperty()
     date = ndb.DateProperty()
     title = ndb.StringProperty()
     description = ndb.StringProperty()
@@ -75,6 +76,7 @@ class ActivityRecord(EndpointsModel):
     country = ndb.StringProperty()
     activity_types = ndb.StringProperty(repeated=True)
     activity_posts = ndb.StringProperty(repeated=True)
+    product_groups = ndb.StringProperty(repeated=True)
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_reached(self):
@@ -153,8 +155,6 @@ class ActivityRecord(EndpointsModel):
         variant=messages.Variant.INT32)
     resharers = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
     comments = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
-    # activity types and product groups
-    product_groups = ndb.StringProperty(repeated=True)
 
     #  activity type metadata
     metadata = ndb.StructuredProperty(ActivityMetaData, repeated=True)

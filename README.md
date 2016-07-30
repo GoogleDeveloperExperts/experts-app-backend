@@ -6,11 +6,14 @@ Please check Makefile for reference (Makefile can be frustrating to work with if
 
     $ make          # Run local dev server by default.
 
-    $ deploy        # Deploy the app depending on project and version in the Makefile.
+    $ make deploy        # Deploy the app depending on project and version in the Makefile.
 
-    $ dev           # Run local dev server
+    $ make dev           # Run local dev server
 
-    $ chrrome_dev   # Start Chrome with unsafely-treat-insecure-origin-as-secure to test API locally.
+    $ make chrome_dev   # Start Chrome with unsafely-treat-insecure-origin-as-secure to test API locally.
+
+## TODO
+The key aspect of today is the need to product_group [repeated] in profiles and product_group in ActivityRecord.
 
 ## Account
     display_name = ndb.StringProperty()
@@ -24,6 +27,8 @@ Please check Makefile for reference (Makefile can be frustrating to work with if
     social_stackoverflow = ndb.StringProperty()
     pg_filename = ndb.StringProperty()
     pic_url = ndb.StringProperty()
+    product_groups = ndb.StringProperty(repeated=True)
+    
 ###### Field renames:
     location -> city
     ctry_filename -> country
@@ -48,6 +53,7 @@ Please check Makefile for reference (Makefile can be frustrating to work with if
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
+    product_groups = ndb.StringProperty(repeated=True)
 
 ## Activity Post (Child Record)
     gplus_id = ndb.StringProperty()

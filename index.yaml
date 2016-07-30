@@ -23,36 +23,30 @@ indexes:
 
 - kind: ActivityPost
   properties:
-  - name: gplus_id
+  - name: email
   - name: date
     direction: desc
 
 - kind: ActivityRecord
   properties:
   - name: deleted
+  - name: email
   - name: post_date
     direction: desc
 
 - kind: ActivityRecord
   properties:
-  - name: deleted
-  - name: gplus_id
+  - name: email
   - name: post_date
     direction: desc
 
 - kind: ActivityRecord
   properties:
-  - name: gplus_id
-  - name: post_date
-    direction: desc
-
-- kind: ActivityRecord
-  properties:
-  - name: gplus_id
+  - name: email
   - name: total_impact
 
 - kind: ActivityRecord
   properties:
-  - name: gplus_id
+  - name: email
   - name: total_impact
     direction: desc
