@@ -151,7 +151,8 @@ class AccountService(remote.Service):
                             'social_facebook',
                             'social_stackoverflow',
                             'pg_filename',
-                            'pic_url'
+                            'pic_url',
+                            'deleted'
                     ),
                     response_fields=(
                             'id',
@@ -165,7 +166,8 @@ class AccountService(remote.Service):
                             'social_facebook',
                             'social_stackoverflow',
                             'pg_filename',
-                            'pic_url'
+                            'pic_url',
+                            'deleted'
                     ))
     def AccountInsert(self, account):
         if not check_auth(None, account.api_key):
