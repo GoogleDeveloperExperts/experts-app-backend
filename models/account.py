@@ -13,7 +13,7 @@ class Account(EndpointsModel):
 
     _message_fields_schema = ('id', 'gplus_id', 'gplus_page', 'type',
                               'display_name', 'pic_url', 'geocode',
-                              'real_name', 'location', 'region',
+                              'real_name', 'location', 'region', 'email',
                               'country', 'ctry_filename', 'product_group',
                               'pg_filename', 'deleted', 'so_id')
 
