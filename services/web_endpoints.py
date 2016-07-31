@@ -154,7 +154,7 @@ class AccountService(remote.Service):
                                     'country', 'ctry_filename', 'product_group',
                                     'pg_filename', 'deleted', 'api_key', 'so_id'),
                     response_fields=('id', 'gplus_id', 'gplus_page', 'type',
-                                     'display_name', 'pic_url', 'geocode',
+                                     'display_name', 'pic_url', 'geocode', 'email',
                                      'real_name', 'email', 'location', 'region',
                                      'country', 'ctry_filename', 'product_group',
                                      'pg_filename', 'deleted', 'so_id'))
