@@ -26,7 +26,8 @@ class Account(EndpointsModel):
         'pic_url',
         'product_group',
         'skills',
-        'biography'
+        'biography',
+        'product_group'
     )
 
     _api_key = None

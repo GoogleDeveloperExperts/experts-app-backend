@@ -152,7 +152,10 @@ class AccountService(remote.Service):
                             'social_stackoverflow',
                             'pg_filename',
                             'pic_url',
-                            'deleted'
+                            'deleted',
+                            'skills',
+                            'biography',
+                            'product_group'
                     ),
                     response_fields=(
                             'id',
@@ -167,10 +170,13 @@ class AccountService(remote.Service):
                             'social_stackoverflow',
                             'pg_filename',
                             'pic_url',
-                            'deleted'
+                            'deleted',
+                            'skills',
+                            'biography',
+                            'product_group'
                     ))
     def AccountInsert(self, account):
-        if not check_auth(None, account.api_key):
+        if not check_auth(account.email, account.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Admins may enter or change this data.')
         account.put()
