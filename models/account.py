@@ -10,7 +10,6 @@ class AccountGeoCode(EndpointsModel):
 
 
 class Account(EndpointsModel):
-
     _message_fields_schema = (
         'id',
         'display_name',
