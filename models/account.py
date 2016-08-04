@@ -21,6 +21,9 @@ class Account(EndpointsModel):
         'social_googleplus',
         'social_facebook',
         'social_stackoverflow',
+        'social_github',
+        'social_linkedin',
+        'social_website',
         'pg_filename',
         'pic_url',
         'product_group',
@@ -41,6 +44,9 @@ class Account(EndpointsModel):
     social_googleplus = ndb.StringProperty()
     social_facebook = ndb.StringProperty()
     social_stackoverflow = ndb.StringProperty()
+    social_github = ndb.StringProperty()
+    social_linkedin = ndb.StringProperty()
+    social_website = ndb.StringProperty()
     pg_filename = ndb.StringProperty()
     pic_url = ndb.StringProperty()
     product_group = ndb.StringProperty(repeated=True)
