@@ -124,18 +124,18 @@ class ActivityRecord(EndpointsModel):
     def api_key(self):
         return self._api_key
 
-    def DummySetter(self, value):
-        # do nothing since property will not be updated from API methods
-        return
+    # def DummySetter(self, value):
+    #     # do nothing since property will not be updated from API methods
+    #     return
 
-    @EndpointsAliasProperty(setter=DummySetter, property_type=messages.StringField)
-    def gde_name(self):
-        if self.gplus_id is None:
-            return None
-        gde = ndb.Key(Account, self.gplus_id).get()
-        if gde is None:
-            return None
-        return gde.display_name
+    # @EndpointsAliasProperty(setter=DummySetter, property_type=messages.StringField)
+    # def gde_name(self):
+    #     if self.gplus_id is None:
+    #         return None
+    #     gde = ndb.Key(Account, self.gplus_id).get()
+    #     if gde is None:
+    #         return None
+    #     return gde.display_name
 
     # fields below are not part of MVP and maybe removed
 
