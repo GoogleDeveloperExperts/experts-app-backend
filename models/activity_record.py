@@ -14,39 +14,6 @@ import logging
 import math
 
 
-class ActivityMetaData(EndpointsModel):
-
-    # groups of activities that can be reported together
-    # content #community #techtalk #bugreport #forumpost #opensourcecode
-    activity_group = ndb.StringProperty()
-
-    # bugreport, techtalk, applies to all
-    title = ndb.StringProperty()
-
-    # applies to all, provides more detail / abstract about the activity
-    description = ndb.StringProperty()
-
-    # sub activity type
-    type = ndb.StringProperty()
-
-    # for all types, can be event link/blog link/github link/...
-    link = ndb.StringProperty()
-
-    # impact is about the number of people impacted
-    # views for #blogpost, attendess for #techtalks ...
-    impact = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
-
-    # for some acivities, links to slides, video's etc
-    other_link1 = ndb.StringProperty()
-    other_link2 = ndb.StringProperty()
-
-    # community, techtalk
-    city = ndb.StringProperty()
-    google_expensed = ndb.BooleanProperty()
-    us_approx_amount = EndpointsVariantIntegerProperty(
-        variant=messages.Variant.INT32)
-
-
 class ActivityRecord(EndpointsModel):
 
     _message_fields_schema = (
@@ -86,10 +53,10 @@ class ActivityRecord(EndpointsModel):
             return total_reached
 
         for post_id in self.activity_posts:
-            post_key = ndb.Key(ActivityPost, post_id)
+            post_key = ndb.Key(ActivityPost, int(post_id))
             activity_post = post_key.get()
             total_reached += activity_post.metric_reached
-        return total_reached / len(self.activity_posts)
+        return total_reached
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_indirect(self):
@@ -99,10 +66,10 @@ class ActivityRecord(EndpointsModel):
             return total_indirect
 
         for post_id in self.activity_posts:
-            post_key = ndb.Key(ActivityPost, post_id)
+            post_key = ndb.Key(ActivityPost, int(post_id))
             activity_post = post_key.get()
             total_indirect += activity_post.metric_indirect
-        return total_indirect / len(self.activity_posts)
+        return total_indirect
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_trained(self):
@@ -112,10 +79,10 @@ class ActivityRecord(EndpointsModel):
             return metric_trained
 
         for post_id in self.activity_posts:
-            post_key = ndb.Key(ActivityPost, post_id)
+            post_key = ndb.Key(ActivityPost, int(post_id))
             activity_post = post_key.get()
             metric_trained += activity_post.metric_trained
-        return metric_trained / len(self.activity_posts)
+        return metric_trained
 
     def ApiKeySet(self, value):
         self._api_key = value
@@ -156,7 +123,7 @@ class ActivityRecord(EndpointsModel):
     resharers = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
     comments = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
 
-    #  activity type metadata
-    metadata = ndb.StructuredProperty(ActivityMetaData, repeated=True)
+    # #  activity type metadata
+    # metadata = ndb.StructuredProperty(ActivityMetaData, repeated=True)
 
     deleted = ndb.BooleanProperty()
