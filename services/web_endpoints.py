@@ -129,7 +129,7 @@ class ActivityPostService(remote.Service):
         activity_post.key.delete()
         return activity_post
 
-    @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken', 'gplus_id'),
+    @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken', 'activity_record'),
                                path='activityPost', name='list')
     def ActivityPostList(self, query):
         return query

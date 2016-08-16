@@ -18,7 +18,8 @@ class ActivityPost(EndpointsModel):
         'url',
         'metric_reached',
         'metric_indirect',
-        'metric_trained'
+        'metric_trained',
+        'activity_record'
     )
 
     _api_key = None
@@ -30,6 +31,8 @@ class ActivityPost(EndpointsModel):
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
+
+    activity_record = ndb.StringProperty()
 
     def ApiKeySet(self, value):
         self._api_key = value
