@@ -2,7 +2,7 @@ import endpoints
 from protorpc import remote
 from models import ActivityPost
 from models import ActivityRecord
-from models import activity_record as ar
+# from models import activity_record as ar
 from models import Account
 from models import ActivityType
 from models import ProductGroup
@@ -11,6 +11,9 @@ from models import ActivityGroup
 from google.appengine.ext import ndb
 
 from .utils import check_auth
+
+import logging
+
 
 _CLIENT_IDs = [
     endpoints.API_EXPLORER_CLIENT_ID,
@@ -67,8 +70,8 @@ class ActivityRecordService(remote.Service):
                 'Only Experts and admins may enter or change data.')
 
         # Mark associated Activity Posts as deleted
-        if activity_record.gplus_posts is not None and len(activity_record.gplus_posts) > 0:
-            keys = [ndb.Key(ActivityPost, id) for id in activity_record.activity_posts]
+        if activity_record.activity_posts is not None and len(activity_record.activity_posts) > 0:
+            keys = [ndb.Key(ActivityPost, int(id)) for id in activity_record.activity_posts]
             activity_posts = ndb.get_multi(keys)
             for activity_post in activity_posts:
                 activity_post.key.delete()
@@ -125,6 +128,19 @@ class ActivityPostService(remote.Service):
         if not check_auth(activity_post.email, activity_post.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
+
+        #delete reference to AP in associated AR
+        if activity_post.activity_record is not None:
+            ar_key = ndb.Key(ActivityRecord, int(activity_post.activity_record))
+            ar = ar_key.get()
+            if ar is None:
+                raise endpoints.NotFoundException('ActivityRecord not found.')
+            logging.info(activity_post.id)
+            logging.info(ar.activity_posts)
+            if str(activity_post.id) in ar.activity_posts:
+                ar.activity_posts.remove(str(activity_post.id))
+                logging.info(ar.activity_posts)
+                ar.put()
 
         activity_post.key.delete()
         return activity_post
