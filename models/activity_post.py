@@ -14,7 +14,7 @@ class ActivityPost(EndpointsModel):
     _message_fields_schema = (
         'id',
         'email',
-        'type',
+        'channel_type',
         'url',
         'metric_reached',
         'metric_indirect',
@@ -26,7 +26,7 @@ class ActivityPost(EndpointsModel):
 
     # MVP fields
     email = ndb.StringProperty(required=True)
-    type = ndb.StringProperty()
+    channel_type = ndb.StringProperty()
     url = ndb.StringProperty()
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()

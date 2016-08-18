@@ -24,7 +24,7 @@ class ActivityRecord(EndpointsModel):
         'description',
         'city',
         'country',
-        'activity_types',
+        'activity_type',
         'activity_posts',
         'metric_reached',
         'metric_indirect',
@@ -41,7 +41,7 @@ class ActivityRecord(EndpointsModel):
     description = ndb.StringProperty()
     city = ndb.StringProperty()
     country = ndb.StringProperty()
-    activity_types = ndb.StringProperty(repeated=True)
+    activity_type = ndb.StringProperty()
     activity_posts = ndb.StringProperty(repeated=True)
     product_groups = ndb.StringProperty(repeated=True)
 
