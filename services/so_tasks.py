@@ -18,7 +18,7 @@ Use EP1 above to get all the answers answered for the month (date range)
 then use EP2 to match tags on the question
 
 
-Harvesting is for an interval, creates an ActivityRecord
+Harvesting is for an interval, creates an ActivityMaster
 with the metadata it extracts from the SO API
 
 We create one AR per product group per month if questions are anwered in that PG
@@ -54,11 +54,11 @@ from google.appengine.api import app_identity
 from apiclient.discovery import build
 
 from models import ActivityDetail
-from models import ActivityRecord
+from models import ActivityMaster
 from models import ActivityMetaData
 from models import Account
 from models import ProductGroup
-from models import activity_record as ar
+from models import activity_master as ar
 
 from .utils import get_so_api_key
 from .utils import VALID_ACCOUNT_TYPES
@@ -208,15 +208,15 @@ class TaskHarvestSO(webapp2.RequestHandler):
                 title = "SO HARVEST - {} - from {} to {}".format(
                     product_group.tag, str(from_date), str(to_date_human))
 
-                activities = ActivityRecord.query(ActivityRecord.gplus_id == gde.gplus_id,
-                                                  ActivityRecord.metadata.type == '#stackOverflow',
-                                                  ActivityRecord.post_date == str(
+                activities = ActivityMaster.query(ActivityMaster.gplus_id == gde.gplus_id,
+                                                  ActivityMaster.metadata.type == '#stackOverflow',
+                                                  ActivityMaster.post_date == str(
                                                       to_date),
-                                                  ActivityRecord.activity_title == title)
+                                                  ActivityMaster.activity_title == title)
 
                 if activities.count(20) == 0:
                     logging.info("create activity record")
-                    activity_record = ActivityRecord(gplus_id=gde.gplus_id,
+                    activity_master = ActivityMaster(gplus_id=gde.gplus_id,
                                                      post_date=str(to_date),
                                                      activity_types=[
                                                          "#forumpost"],
@@ -228,15 +228,15 @@ class TaskHarvestSO(webapp2.RequestHandler):
                                                      resharers=0,
                                                      comments=0,
                                                      deleted=False)
-                    activity_record.metadata.insert(0, ActivityMetaData())
-                    meta = activity_record.metadata[0]
+                    activity_master.metadata.insert(0, ActivityMetaData())
+                    meta = activity_master.metadata[0]
                     meta.type = '#stackOverflow'
                     meta.activity_group = '#forumpost'
-                    meta.link = activity_record.activity_link
+                    meta.link = activity_master.activity_link
                     meta.impact = count
-                    activity_record.put()
+                    activity_master.put()
                 else:
-                    logging.info("ActivityRecord Exist Not Overwritting")
+                    logging.info("ActivityMaster Exist Not Overwritting")
 
     def add_answer_to_tag_count(self, pg_tags, question_id):
         # this can be optimized to do only one call, by passed many question

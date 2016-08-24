@@ -18,9 +18,9 @@ from google.appengine.api import users
 from apiclient.discovery import build
 
 from models import ActivityDetail
-from models import ActivityRecord
+from models import ActivityMaster
 from models import Account
-from models import activity_record as ar
+from models import activity_master as ar
 
 
 # NON VALID ACCOUNT TYPES (FOR HARVESTING) : ['deleted', 'administrator']

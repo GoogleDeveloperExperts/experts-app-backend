@@ -7,7 +7,7 @@ total_impact.
 import webapp2
 import logging
 
-from models import ActivityRecord
+from models import ActivityMaster
 
 
 class TaskCalcImpact(webapp2.RequestHandler):
@@ -18,9 +18,9 @@ class TaskCalcImpact(webapp2.RequestHandler):
         """."""
         logging.info('tasks/calc_impact')
 
-        activity_records = ActivityRecord.query()
+        activity_masters = ActivityMaster.query()
         ar_count = 0
-        for ar in activity_records:
+        for ar in activity_masters:
             if ar.deleted is None:
                 ar.deleted = False
             ar.put()

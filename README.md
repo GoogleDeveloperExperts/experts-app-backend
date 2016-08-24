@@ -13,7 +13,7 @@ Please check Makefile for reference (Makefile can be frustrating to work with if
     $ make chrome_dev   # Start Chrome with unsafely-treat-insecure-origin-as-secure to test API locally.
 
 ## TODO
-The key aspect of today is the need to product_group [repeated] in profiles and product_group in ActivityRecord.
+The key aspect of today is the need to product_group [repeated] in profiles and product_group in ActivityMaster.
 
 ## Account
     display_name = ndb.StringProperty()
@@ -41,7 +41,7 @@ The key aspect of today is the need to product_group [repeated] in profiles and 
     deleted
 
 
-## ActivityRecord (Master Record)
+## ActivityMaster (Master Record)
     gplus_id = ndb.StringProperty()
     date = ndb.DateProperty()
     title = ndb.StringProperty()

@@ -14,7 +14,7 @@ import logging
 import math
 
 
-class ActivityRecord(EndpointsModel):
+class ActivityMaster(EndpointsModel):
 
     _message_fields_schema = (
         'id',

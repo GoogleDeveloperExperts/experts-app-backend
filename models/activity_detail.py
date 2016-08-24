@@ -19,7 +19,7 @@ class ActivityDetail(EndpointsModel):
         'metric_reached',
         'metric_indirect',
         'metric_trained',
-        'activity_record'
+        'activity_master'
     )
 
     _api_key = None
@@ -32,7 +32,7 @@ class ActivityDetail(EndpointsModel):
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
 
-    activity_record = ndb.StringProperty()
+    activity_master = ndb.StringProperty()
 
     def ApiKeySet(self, value):
         self._api_key = value
