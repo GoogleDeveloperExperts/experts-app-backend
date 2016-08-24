@@ -53,7 +53,7 @@ from google.appengine.api import app_identity
 
 from apiclient.discovery import build
 
-from models import ActivityPost
+from models import ActivityDetail
 from models import ActivityRecord
 from models import ActivityMetaData
 from models import Account

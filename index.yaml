@@ -9,7 +9,7 @@
 # your application using appcfg.py.
 indexes:
 
-- kind: ActivityPost
+- kind: ActivityDetail
   properties:
   - name: email
   - name: date

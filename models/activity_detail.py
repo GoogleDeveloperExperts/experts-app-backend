@@ -9,7 +9,7 @@ from models.activity_type import ActivityType
 from models.product_group import ProductGroup
 
 
-class ActivityPost(EndpointsModel):
+class ActivityDetail(EndpointsModel):
 
     _message_fields_schema = (
         'id',
@@ -26,7 +26,7 @@ class ActivityPost(EndpointsModel):
 
     # MVP fields
     email = ndb.StringProperty(required=True)
-    channel_type = ndb.StringProperty()
+    detail_type = ndb.StringProperty()
     url = ndb.StringProperty()
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
@@ -43,13 +43,13 @@ class ActivityPost(EndpointsModel):
 
 
 
-    # in the previous version the activity post as equal the the G+ post it
+    # in the previous version the activity detail as equal the the G+ post it
     # this is why we were setting it. This is no longer necessary. 
     #
     # def IdSet(self, value):
     #     if not isinstance(value, basestring):
     #         raise TypeError('ID must be a string.')
-    #     self.UpdateFromKey(ndb.Key(ActivityPost, value))
+    #     self.UpdateFromKey(ndb.Key(ActivityDetail, value))
 
     # @EndpointsAliasProperty(setter=IdSet, required=True)
     # def id(self):

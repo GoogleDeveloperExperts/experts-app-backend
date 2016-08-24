@@ -41,7 +41,7 @@ The key aspect of today is the need to product_group [repeated] in profiles and 
     deleted
 
 
-## Activity Record (Master Record)
+## ActivityRecord (Master Record)
     gplus_id = ndb.StringProperty()
     date = ndb.DateProperty()
     title = ndb.StringProperty()
@@ -49,13 +49,13 @@ The key aspect of today is the need to product_group [repeated] in profiles and 
     city = ndb.StringProperty()
     country = ndb.StringProperty()
     activity_types = ndb.StringProperty(repeated=True)
-    activity_posts = ndb.StringProperty(repeated=True)
+    activity_details = ndb.StringProperty(repeated=True)
     metric_reached = ndb.IntegerProperty()
     metric_indirect = ndb.IntegerProperty()
     metric_trained = ndb.IntegerProperty()
     product_groups = ndb.StringProperty(repeated=True)
 
-## Activity Post (Child Record)
+## Activity Detail (Child Record)
     gplus_id = ndb.StringProperty()
     type = ndb.StringProperty()
     url = ndb.StringProperty()

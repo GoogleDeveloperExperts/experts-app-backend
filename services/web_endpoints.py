@@ -1,6 +1,6 @@
 import endpoints
 from protorpc import remote
-from models import ActivityPost
+from models import ActivityDetail
 from models import ActivityRecord
 # from models import activity_record as ar
 from models import Account
@@ -70,11 +70,11 @@ class ActivityRecordService(remote.Service):
                 'Only Experts and admins may enter or change data.')
 
         # Mark associated Activity Posts as deleted
-        if activity_record.activity_posts is not None and len(activity_record.activity_posts) > 0:
-            keys = [ndb.Key(ActivityPost, int(id)) for id in activity_record.activity_posts]
-            activity_posts = ndb.get_multi(keys)
-            for activity_post in activity_posts:
-                activity_post.key.delete()
+        if activity_record.activity_details is not None and len(activity_record.activity_details) > 0:
+            keys = [ndb.Key(ActivityDetail, int(id)) for id in activity_record.activity_details]
+            activity_details = ndb.get_multi(keys)
+            for activity_detail in activity_details:
+                activity_detail.key.delete()
 
         activity_record.key.delete()
         return activity_record
@@ -85,68 +85,68 @@ class ActivityRecordService(remote.Service):
         return query
 
 
-@api_root.api_class(resource_name='activity_post', path='activityPost')
+@api_root.api_class(resource_name='activity_detail', path='ActivityDetail')
 class ActivityPostService(remote.Service):
-    @ActivityPost.method(request_fields=('id',), path='/activityPost/{id}',
+    @ActivityDetail.method(request_fields=('id',), path='/activityDetail/{id}',
                          http_method='GET', name='get')
-    def get(self, activity_post):
-        if not activity_post.from_datastore:
-            raise endpoints.NotFoundException('ActivityPost not found.')
-        return activity_post
+    def get(self, activity_detail):
+        if not activity_detail.from_datastore:
+            raise endpoints.NotFoundException('ActivityDetail not found.')
+        return activity_detail
 
-    @ActivityPost.method(path='/activityPost', http_method='POST',
+    @ActivityDetail.method(path='/activityDetail', http_method='POST',
                          name='insert')
-    def ActivityPostInsert(self, activity_post):
+    def ActivityPostInsert(self, activity_detail):
 
-        if not check_auth(activity_post.email, activity_post.api_key):
+        if not check_auth(activity_detail.email, activity_detail.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
-        activity_post.put()
-        return activity_post
+        activity_detail.put()
+        return activity_detail
 
-    @ActivityPost.method(path='/activityPost/{id}', http_method='PUT',
+    @ActivityDetail.method(path='/activityDetail/{id}', http_method='PUT',
                          name='update')
-    def ActivityPostUpdate(self, activity_post):
-        if not activity_post.from_datastore:
-            raise endpoints.NotFoundException('ActivityPost not found.')
+    def ActivityPostUpdate(self, activity_detail):
+        if not activity_detail.from_datastore:
+            raise endpoints.NotFoundException('ActivityDetail not found.')
 
-        if not check_auth(activity_post.email, activity_post.api_key):
+        if not check_auth(activity_detail.email, activity_detail.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
-        activity_post.put()
-        return activity_post
+        activity_detail.put()
+        return activity_detail
 
-    @ActivityPost.method(request_fields=('id', 'api_key',), response_fields=('id',),
-                         path='/activityPost/delete/{id}',
+    @ActivityDetail.method(request_fields=('id', 'api_key',), response_fields=('id',),
+                         path='/activityDetail/delete/{id}',
                          http_method='DELETE', name='delete')
-    def ActivityPostDelete(self, activity_post):
-        if not activity_post.from_datastore:
-            raise endpoints.NotFoundException('ActivityPost not found.')
+    def ActivityPostDelete(self, activity_detail):
+        if not activity_detail.from_datastore:
+            raise endpoints.NotFoundException('ActivityDetail not found.')
 
-        if not check_auth(activity_post.email, activity_post.api_key):
+        if not check_auth(activity_detail.email, activity_detail.api_key):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
         #delete reference to AP in associated AR
-        if activity_post.activity_record is not None:
-            ar_key = ndb.Key(ActivityRecord, int(activity_post.activity_record))
+        if activity_detail.activity_record is not None:
+            ar_key = ndb.Key(ActivityRecord, int(activity_detail.activity_record))
             ar = ar_key.get()
             if ar is None:
                 raise endpoints.NotFoundException('ActivityRecord not found.')
-            logging.info(activity_post.id)
-            logging.info(ar.activity_posts)
-            if str(activity_post.id) in ar.activity_posts:
-                ar.activity_posts.remove(str(activity_post.id))
-                logging.info(ar.activity_posts)
+            logging.info(activity_detail.id)
+            logging.info(ar.activity_details)
+            if str(activity_detail.id) in ar.activity_details:
+                ar.activity_details.remove(str(activity_detail.id))
+                logging.info(ar.activity_details)
                 ar.put()
 
-        activity_post.key.delete()
-        return activity_post
+        activity_detail.key.delete()
+        return activity_detail
 
-    @ActivityPost.query_method(query_fields=('limit', 'order', 'pageToken', 'activity_record'),
-                               path='activityPost', name='list')
+    @ActivityDetail.query_method(query_fields=('limit', 'order', 'pageToken', 'activity_record'),
+                               path='activityDetail', name='list')
     def ActivityPostList(self, query):
         return query
 

@@ -6,7 +6,7 @@ from endpoints_proto_datastore.ndb import EndpointsComputedProperty
 from datetime import datetime
 from protorpc import messages
 
-from models.activity_post import ActivityPost
+from models.activity_detail import ActivityDetail
 from models.account import Account
 
 import logging
@@ -25,7 +25,7 @@ class ActivityRecord(EndpointsModel):
         'city',
         'country',
         'activity_type',
-        'activity_posts',
+        'activity_details',
         'metric_reached',
         'metric_indirect',
         'metric_trained',
@@ -42,49 +42,49 @@ class ActivityRecord(EndpointsModel):
     city = ndb.StringProperty()
     country = ndb.StringProperty()
     activity_type = ndb.StringProperty()
-    activity_posts = ndb.StringProperty(repeated=True)
+    activity_details = ndb.StringProperty(repeated=True)
     product_groups = ndb.StringProperty(repeated=True)
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_reached(self):
         total_reached = 0
 
-        if len(self.activity_posts) == 0:
+        if len(self.activity_details) == 0:
             return total_reached
 
-        for post_id in self.activity_posts:
-            post_key = ndb.Key(ActivityPost, int(post_id))
+        for post_id in self.activity_details:
+            post_key = ndb.Key(ActivityDetail, int(post_id))
             logging.info(post_key)
-            activity_post = post_key.get()
-            total_reached += activity_post.metric_reached
+            activity_detail = post_key.get()
+            total_reached += activity_detail.metric_reached
         return total_reached
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_indirect(self):
         total_indirect = 0
 
-        if len(self.activity_posts) == 0:
+        if len(self.activity_details) == 0:
             return total_indirect
 
-        for post_id in self.activity_posts:
-            post_key = ndb.Key(ActivityPost, int(post_id))
+        for post_id in self.activity_details:
+            post_key = ndb.Key(ActivityDetail, int(post_id))
             logging.info(post_key)
-            activity_post = post_key.get()
-            total_indirect += activity_post.metric_indirect
+            activity_detail = post_key.get()
+            total_indirect += activity_detail.metric_indirect
         return total_indirect
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_trained(self):
         total_trained = 0
 
-        if len(self.activity_posts) == 0:
+        if len(self.activity_details) == 0:
             return total_trained
 
-        for post_id in self.activity_posts:
-            post_key = ndb.Key(ActivityPost, int(post_id))
+        for post_id in self.activity_details:
+            post_key = ndb.Key(ActivityDetail, int(post_id))
             logging.info(post_key)
-            activity_post = post_key.get()
-            total_trained += activity_post.metric_trained
+            activity_detail = post_key.get()
+            total_trained += activity_detail.metric_trained
         return total_trained
 
     def ApiKeySet(self, value):
