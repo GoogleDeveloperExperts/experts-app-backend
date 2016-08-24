@@ -14,7 +14,7 @@ class ActivityDetail(EndpointsModel):
     _message_fields_schema = (
         'id',
         'email',
-        'channel_type',
+        'detail_type',
         'url',
         'metric_reached',
         'metric_indirect',
