@@ -35,7 +35,7 @@ class ActivityMasterService(remote.Service):
 
     @ActivityMaster.method(path='/activityMaster', http_method='POST',
                            name='insert')
-    def ActivityRecordInsert(self, activity_master):
+    def ActivityMasterInsert(self, activity_master):
 
         if not check_auth(activity_master.email, activity_master.api_key):
             raise endpoints.UnauthorizedException(
@@ -46,7 +46,7 @@ class ActivityMasterService(remote.Service):
 
     @ActivityMaster.method(path='/activityMaster/{id}', http_method='PUT',
                            name='update')
-    def ActivityRecordUpdate(self, activity_master):
+    def ActivityMasterUpdate(self, activity_master):
         if not activity_master.from_datastore:
             raise endpoints.NotFoundException('ActivityMaster not found.')
 
@@ -60,7 +60,7 @@ class ActivityMasterService(remote.Service):
     @ActivityMaster.method(request_fields=('id', 'api_key',), response_fields=('id',),
                            path='/activityMaster/delete/{id}',
                            http_method='DELETE', name='delete')
-    def ActivityRecordDelete(self, activity_master):
+    def ActivityMasterDelete(self, activity_master):
         if not activity_master.from_datastore:
             raise endpoints.NotFoundException('ActivityMaster not found.')
 
@@ -68,7 +68,7 @@ class ActivityMasterService(remote.Service):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
-        # Mark associated Activity Posts as deleted
+        # Mark associated Activity Details as deleted
         if activity_master.activity_details is not None and len(activity_master.activity_details) > 0:
             keys = [ndb.Key(ActivityDetail, int(id)) for id in activity_master.activity_details]
             activity_details = ndb.get_multi(keys)
@@ -80,7 +80,7 @@ class ActivityMasterService(remote.Service):
 
     @ActivityMaster.query_method(query_fields=('limit', 'order', 'pageToken', 'email'),
                                  path='activityMaster', name='list')
-    def ActivityRecordList(self, query):
+    def ActivityMasterList(self, query):
         return query
 
 
@@ -95,7 +95,7 @@ class ActivityDetailService(remote.Service):
 
     @ActivityDetail.method(path='/activityDetail', http_method='POST',
                          name='insert')
-    def ActivityPostInsert(self, activity_detail):
+    def ActivityDetailInsert(self, activity_detail):
 
         if not check_auth(activity_detail.email, activity_detail.api_key):
             raise endpoints.UnauthorizedException(
@@ -106,7 +106,7 @@ class ActivityDetailService(remote.Service):
 
     @ActivityDetail.method(path='/activityDetail/{id}', http_method='PUT',
                          name='update')
-    def ActivityPostUpdate(self, activity_detail):
+    def ActivityDetailUpdate(self, activity_detail):
         if not activity_detail.from_datastore:
             raise endpoints.NotFoundException('ActivityDetail not found.')
 
@@ -120,7 +120,7 @@ class ActivityDetailService(remote.Service):
     @ActivityDetail.method(request_fields=('id', 'api_key',), response_fields=('id',),
                          path='/activityDetail/delete/{id}',
                          http_method='DELETE', name='delete')
-    def ActivityPostDelete(self, activity_detail):
+    def ActivityDetailDelete(self, activity_detail):
         if not activity_detail.from_datastore:
             raise endpoints.NotFoundException('ActivityDetail not found.')
 
@@ -146,7 +146,7 @@ class ActivityDetailService(remote.Service):
 
     @ActivityDetail.query_method(query_fields=('limit', 'order', 'pageToken', 'activity_master'),
                                path='activityDetail', name='list')
-    def ActivityPostList(self, query):
+    def ActivityDetailList(self, query):
         return query
 
 
