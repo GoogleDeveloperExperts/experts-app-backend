@@ -101,8 +101,21 @@ class ActivityDetailService(remote.Service):
             raise endpoints.UnauthorizedException(
                 'Only Experts and admins may enter or change data.')
 
-        activity_detail.put()
-        return activity_detail
+        # activity details must be associated with an master record
+        # automatically adding it to master record if available else rejecting
+        if activity_detail.activity_master != "" and not None:
+            ar_key = ndb.Key(ActivityMaster, int(activity_detail.activity_master))
+            ar = ar_key.get()
+            if ar is None:
+                raise endpoints.NotFoundException('Data Inconsitency ActivityMaster not found.')
+            else:
+                activity_detail.put()
+                ar.activity_details.append(str(activity_detail.id))
+                ar.put()
+            return activity_detail
+        else:
+            raise endpoints.NotFoundException('ActivityMaster id not found or empty string')
+
 
     @ActivityDetail.method(path='/activityDetail/{id}', http_method='PUT',
                          name='update')
