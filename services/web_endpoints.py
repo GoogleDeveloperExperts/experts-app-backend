@@ -84,7 +84,7 @@ class ActivityMasterService(remote.Service):
         return query
 
 
-@api_root.api_class(resource_name='activity_detail', path='ActivityDetail')
+@api_root.api_class(resource_name='activity_detail', path='activityDetail')
 class ActivityDetailService(remote.Service):
     @ActivityDetail.method(request_fields=('id',), path='/activityDetail/{id}',
                          http_method='GET', name='get')

@@ -9,32 +9,3 @@
 # your application using appcfg.py.
 indexes:
 
-- kind: ActivityDetail
-  properties:
-  - name: email
-  - name: date
-    direction: desc
-
-- kind: ActivityMaster
-  properties:
-  - name: deleted
-  - name: email
-  - name: post_date
-    direction: desc
-
-- kind: ActivityMaster
-  properties:
-  - name: email
-  - name: post_date
-    direction: desc
-
-- kind: ActivityMaster
-  properties:
-  - name: email
-  - name: total_impact
-
-- kind: ActivityMaster
-  properties:
-  - name: email
-  - name: total_impact
-    direction: desc
