@@ -1,17 +1,20 @@
+import logging
+
 import endpoints
-from protorpc import remote
-from models import ActivityDetail
-from models import ActivityMaster
-from models import Account
-from models import ActivityType
-from models import ProductGroup
-from models import ActivityGroup
 
 from google.appengine.ext import ndb
 
+from models import Account
+from models import ActivityGroup
+from models import ActivityType
+from models import ProductGroup
+from models import ActivityMaster
+from models import ActivityDetail
+
+from protorpc import remote
+
 from .utils import check_auth
 
-import logging
 
 
 _CLIENT_IDs = [
@@ -110,8 +113,9 @@ class ActivityDetailService(remote.Service):
                 raise endpoints.NotFoundException('Data Inconsitency ActivityMaster not found.')
             else:
                 activity_detail.put()
-                ar.activity_details.append(str(activity_detail.id))
-                ar.put()
+                if str(activity_detail.id) not in ar.activity_details:
+                    ar.activity_details.append(str(activity_detail.id))
+                    ar.put()
             return activity_detail
         else:
             raise endpoints.NotFoundException('ActivityMaster id not found or empty string')
