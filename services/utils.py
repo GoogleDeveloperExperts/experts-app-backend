@@ -17,10 +17,7 @@ from google.appengine.api import urlfetch
 from google.appengine.api import users
 from apiclient.discovery import build
 
-from models import ActivityDetail
-from models import ActivityMaster
 from models import Account
-from models import activity_master as ar
 
 
 # NON VALID ACCOUNT TYPES (FOR HARVESTING) : ['deleted', 'administrator']
@@ -154,6 +151,8 @@ def check_auth(email, api_key):
 
     accounts = Account.query(Account.email == email).fetch(1)
     if email is not None and endpoints.get_current_user() is not None and len(accounts) == 1:
+        if account[0].deleted:
+            return False
         return email == endpoints.get_current_user().email() and email == accounts[0].email
 
     return False

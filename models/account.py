@@ -54,6 +54,10 @@ class Account(EndpointsModel):
     biography = ndb.TextProperty()
 
 
+    # reinstated to deal with auth & login
+    deleted = ndb.BooleanProperty()
+
+
     def ApiKeySet(self, value):
         self._api_key = value
 
@@ -80,6 +84,5 @@ class Account(EndpointsModel):
     region = ndb.StringProperty()
     ctry_filename = ndb.StringProperty()
     geocode = ndb.StructuredProperty(AccountGeoCode)
-    deleted = ndb.BooleanProperty()
     so_id = ndb.StringProperty()
 
