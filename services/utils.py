@@ -146,13 +146,17 @@ def get_current_account():
 
 
 def check_auth(email, api_key):
+    logging.info('check_auth')
     if api_key is not None and api_key == get_admin_api_key():
+        logging.info('check_auth : true')
         return True
 
     accounts = Account.query(Account.email == email).fetch(1)
     if email is not None and endpoints.get_current_user() is not None and len(accounts) == 1:
-        if account[0].deleted:
+        if accounts[0].deleted:
+            logging.info('check_auth : false')
             return False
         return email == endpoints.get_current_user().email() and email == accounts[0].email
 
+    logging.info('check_auth : false')
     return False

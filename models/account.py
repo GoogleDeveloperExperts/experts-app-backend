@@ -29,7 +29,8 @@ class Account(EndpointsModel):
         'product_group',
         'skills',
         'biography',
-        'product_group'
+        'product_group',
+        'deleted'
     )
 
     _api_key = None
