@@ -78,12 +78,12 @@ class Account(EndpointsModel):
 
 
     # fields below are not part of MVP and maybe removed
-    gplus_id = ndb.StringProperty()
-    gplus_page = ndb.StringProperty()
-    real_name = ndb.StringProperty()
-    auth_email = ndb.StringProperty()
-    region = ndb.StringProperty()
-    ctry_filename = ndb.StringProperty()
-    geocode = ndb.StructuredProperty(AccountGeoCode)
-    so_id = ndb.StringProperty()
+    # gplus_id = ndb.StringProperty()
+    # gplus_page = ndb.StringProperty()
+    # real_name = ndb.StringProperty()
+    # auth_email = ndb.StringProperty()
+    # region = ndb.StringProperty()
+    # ctry_filename = ndb.StringProperty()
+    # geocode = ndb.StructuredProperty(AccountGeoCode)
+    # so_id = ndb.StringProperty()
 
