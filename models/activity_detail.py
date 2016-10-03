@@ -34,6 +34,11 @@ class ActivityDetail(EndpointsModel):
 
     activity_master = ndb.StringProperty()
 
+    # useful
+    date_created = ndb.DateTimeProperty(auto_now_add=True)
+    date_updated = ndb.DateTimeProperty(auto_now=True)
+    deleted = ndb.BooleanProperty(default=False)
+
     def ApiKeySet(self, value):
         self._api_key = value
 
@@ -59,21 +64,20 @@ class ActivityDetail(EndpointsModel):
     # fields below are not part of MVP and maybe removed
 
     # tempted to use the G+ unique activity id ( stack overflow ?)
-    post_id = ndb.StringProperty()
+    # post_id = ndb.StringProperty()
     # we identify Expert's uniquely using this
-    gplus_id = ndb.StringProperty()
-    name = ndb.StringProperty()
+    # gplus_id = ndb.StringProperty()
+    # name = ndb.StringProperty()
     # date at which the activity (post) was made
-    date = ndb.StringProperty()
-    plus_oners = EndpointsVariantIntegerProperty(
-        variant=messages.Variant.INT32)
-    resharers = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
-    comments = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
-    title = ndb.StringProperty()
+    # date = ndb.StringProperty()
+    # plus_oners = EndpointsVariantIntegerProperty(
+    #     variant=messages.Variant.INT32)
+    # resharers = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
+    # comments = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
+    # title = ndb.StringProperty()
     # url of the post (question for stack overflow)
-    url = ndb.StringProperty()
-    product_group = ndb.StringProperty(repeated=True)
-    activity_type = ndb.StringProperty(repeated=True)
-    links = ndb.StringProperty()
+    # url = ndb.StringProperty()
+    # product_group = ndb.StringProperty(repeated=True)
+    # activity_type = ndb.StringProperty(repeated=True)
+    # links = ndb.StringProperty()
 
-    deleted = ndb.BooleanProperty(default=False)

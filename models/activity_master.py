@@ -45,6 +45,11 @@ class ActivityMaster(EndpointsModel):
     activity_details = ndb.StringProperty(repeated=True)
     product_groups = ndb.StringProperty(repeated=True)
 
+    # useful
+    date_created = ndb.DateTimeProperty(auto_now_add=True)
+    date_updated = ndb.DateTimeProperty(auto_now=True)
+    deleted = ndb.BooleanProperty()
+
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_reached(self):
         total_reached = 0
@@ -109,24 +114,21 @@ class ActivityMaster(EndpointsModel):
 
     # fields below are not part of MVP and maybe removed
 
-    # dates: are they really useful????
-    date_created = ndb.DateTimeProperty(auto_now_add=True)
-    date_updated = ndb.DateTimeProperty(auto_now=True)
     # first post date, will be more interesting
-    post_date = ndb.StringProperty()
+    # post_date = ndb.StringProperty()
     # related posts, we store the post_id's and the activity link
     # in some case the activity link is the gplus_post link itself
     # when there are no links attached to the post
-    activity_link = ndb.StringProperty()
-    activity_title = ndb.StringProperty()
-    gplus_posts = ndb.StringProperty(repeated=True)
+    # activity_link = ndb.StringProperty()
+    # activity_title = ndb.StringProperty()
+    # gplus_posts = ndb.StringProperty(repeated=True)
     # cumulative plus_oners & resharers
-    plus_oners = EndpointsVariantIntegerProperty(
-        variant=messages.Variant.INT32)
-    resharers = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
-    comments = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
+    # plus_oners = EndpointsVariantIntegerProperty(
+    #     variant=messages.Variant.INT32)
+    # resharers = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
+    # comments = EndpointsVariantIntegerProperty(variant=messages.Variant.INT32)
 
     # #  activity type metadata
     # metadata = ndb.StructuredProperty(ActivityMetaData, repeated=True)
 
-    deleted = ndb.BooleanProperty()
+    # deleted = ndb.BooleanProperty()

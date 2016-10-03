@@ -48,8 +48,6 @@ class Account(EndpointsModel):
     social_github = ndb.StringProperty()
     social_linkedin = ndb.StringProperty()
     social_website = ndb.StringProperty()
-    pg_filename = ndb.StringProperty()
-    pic_url = ndb.StringProperty()
     product_group = ndb.StringProperty(repeated=True)
     skills = ndb.StringProperty(repeated=True)
     biography = ndb.TextProperty()
@@ -90,4 +88,8 @@ class Account(EndpointsModel):
     # ctry_filename = ndb.StringProperty()
     # geocode = ndb.StructuredProperty(AccountGeoCode)
     # so_id = ndb.StringProperty()
+
+    pg_filename = ndb.StringProperty()
+    pic_url = ndb.StringProperty()
+
 
