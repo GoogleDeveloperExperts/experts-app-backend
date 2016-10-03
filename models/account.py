@@ -58,6 +58,10 @@ class Account(EndpointsModel):
     # reinstated to deal with auth & login
     deleted = ndb.BooleanProperty()
 
+    # alsways useful
+    date_created = ndb.DateTimeProperty(auto_now_add=True)
+    date_updated = ndb.DateTimeProperty(auto_now=True)
+
 
     def ApiKeySet(self, value):
         self._api_key = value
