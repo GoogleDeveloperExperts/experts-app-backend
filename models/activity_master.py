@@ -48,7 +48,7 @@ class ActivityMaster(EndpointsModel):
     # useful
     date_created = ndb.DateTimeProperty(auto_now_add=True)
     date_updated = ndb.DateTimeProperty(auto_now=True)
-    deleted = ndb.BooleanProperty()
+    deleted = ndb.BooleanProperty(default=False)
 
     @EndpointsComputedProperty(property_type=messages.IntegerField, variant=messages.Variant.INT32)
     def metric_reached(self):
