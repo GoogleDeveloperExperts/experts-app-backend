@@ -14,7 +14,7 @@ class Account(EndpointsModel):
         'id',
         'display_name',
         'email',
-        'type',
+        'expert_type',
         'city',
         'country',
         'social_twitter',
@@ -38,7 +38,7 @@ class Account(EndpointsModel):
     # MVP fields
     display_name = ndb.StringProperty()
     email = ndb.StringProperty(required=True)
-    type = ndb.StringProperty() # GDE type, read only field
+    expert_type = ndb.StringProperty()  # Expert type
     city = ndb.StringProperty()
     country = ndb.StringProperty()
     social_twitter = ndb.StringProperty()

@@ -175,7 +175,7 @@ class AccountService(remote.Service):
                             'id',
                             'display_name',
                             'email',
-                            'type',
+                            'expert_type',
                             'city',
                             'country',
                             'social_twitter',
@@ -196,7 +196,7 @@ class AccountService(remote.Service):
                             'id',
                             'display_name',
                             'email',
-                            'type',
+                            'expert_type',
                             'city',
                             'country',
                             'social_twitter',
@@ -227,7 +227,7 @@ class AccountService(remote.Service):
             raise endpoints.NotFoundException('Account not found.')
         return account
 
-    @Account.query_method(query_fields=('limit', 'order', 'pageToken', 'type'),
+    @Account.query_method(query_fields=('limit', 'order', 'pageToken', 'expert_type'),
                           path='account', name='list')
     def AccountList(self, query):
         return query
