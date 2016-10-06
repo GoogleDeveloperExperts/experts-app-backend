@@ -29,7 +29,8 @@ class ActivityMaster(EndpointsModel):
         'metric_reached',
         'metric_indirect',
         'metric_trained',
-        'product_groups'
+        'product_groups',
+        'date_created'
     )
 
     _api_key = None

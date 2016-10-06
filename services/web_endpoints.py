@@ -86,6 +86,11 @@ class ActivityMasterService(remote.Service):
     def ActivityMasterList(self, query):
         return query
 
+    @ActivityMaster.query_method(query_fields=('limit', 'order', 'pageToken'),
+                                 path='activityMaster/list', name='list_all')
+    def ActivityMasterListAll(self, query):
+        return query
+
 
 @api_root.api_class(resource_name='activity_detail', path='activityDetail')
 class ActivityDetailService(remote.Service):
@@ -164,6 +169,11 @@ class ActivityDetailService(remote.Service):
     @ActivityDetail.query_method(query_fields=('limit', 'order', 'pageToken', 'activity_master'),
                                path='activityDetail', name='list')
     def ActivityDetailList(self, query):
+        return query
+
+    @ActivityDetail.query_method(query_fields=('limit', 'order', 'pageToken'),
+                                 path='activityDetail/list', name='list_all')
+    def ActivityDetailListAll(self, query):
         return query
 
 
